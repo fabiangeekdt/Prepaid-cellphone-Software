@@ -1,7 +1,6 @@
 # Prepaid-cellphone-Software
+Author: Fabian Andres Moreno Chacon
 <br>
-<H5>Author: Fabian Andres Moreno Chacon</H5>
+Creation Date: Auguts 31, 2017
 <br>
-<H5>Creation Date: Auguts 31, 2017</H5>
-<br>
-<H5>Description: ..</H5>
+Description: 
