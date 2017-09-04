@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CELLPHONE_COMPANYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CALL">
+          <Key>
+            <PropertyRef Name="PhoneCall_Id" />
+          </Key>
+          <Property Name="PhoneCall_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_id" Type="int" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Destination_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Initial_DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Final_DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Call_Duration" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Call_Cost" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Call_State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CALL_STATE">
+          <Key>
+            <PropertyRef Name="State_Id" />
+          </Key>
+          <Property Name="State_Id" Type="int" Nullable="false" />
+          <Property Name="State_Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Phone_Number" />
+          </Key>
+          <Property Name="Id_Type" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Second_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER_BONUS">
+          <Key>
+            <PropertyRef Name="Bonus_Code" />
+          </Key>
+          <Property Name="Bonus_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_Id" Type="int" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Promotion_Id" Type="int" Nullable="false" />
+          <Property Name="Activation_day" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER_PHONE">
+          <Key>
+            <PropertyRef Name="Internal_Id" />
+          </Key>
+          <Property Name="Internal_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_Id" Type="int" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone_state" Type="tinyint" Nullable="false" />
+          <Property Name="Minute_Balance" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Minutes_Use" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MINIMUN_RECHARGE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Period" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="MinimunValue" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRICE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PROMOTION">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="Value_Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PROMOTION_VALUETYPE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RECHARGE">
+          <Key>
+            <PropertyRef Name="Recharge_Code" />
+          </Key>
+          <Property Name="Recharge_Code" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_Id" Type="int" Nullable="false" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Recharge_value" Type="decimal" Precision="7" Scale="0" Nullable="false" />
+          <Property Name="Recharge_Date" Type="datetime" Nullable="false" />
+          <Property Name="Recharge_State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RECHARGE_STATE">
+          <Key>
+            <PropertyRef Name="State_Id" />
+          </Key>
+          <Property Name="State_Id" Type="int" Nullable="false" />
+          <Property Name="State_Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CALL_HISTORY_CALL_STATE">
+          <End Role="CALL_STATE" Type="Self.CALL_STATE" Multiplicity="1" />
+          <End Role="CALL" Type="Self.CALL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CALL_STATE">
+              <PropertyRef Name="State_Id" />
+            </Principal>
+            <Dependent Role="CALL">
+              <PropertyRef Name="Call_State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALL_HISTORY_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="CALL" Type="Self.CALL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="CALL">
+              <PropertyRef Name="Customer_id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMER_BONUS_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="CUSTOMER_BONUS" Type="Self.CUSTOMER_BONUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="CUSTOMER_BONUS">
+              <PropertyRef Name="Customer_Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMER_BONUS_PROMOTION">
+          <End Role="PROMOTION" Type="Self.PROMOTION" Multiplicity="1" />
+          <End Role="CUSTOMER_BONUS" Type="Self.CUSTOMER_BONUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROMOTION">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CUSTOMER_BONUS">
+              <PropertyRef Name="Promotion_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMERPHONE">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="CUSTOMER_PHONE" Type="Self.CUSTOMER_PHONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="CUSTOMER_PHONE">
+              <PropertyRef Name="Customer_Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROMOTION_PROMOTION_VALUETYPE">
+          <End Role="PROMOTION_VALUETYPE" Type="Self.PROMOTION_VALUETYPE" Multiplicity="1" />
+          <End Role="PROMOTION" Type="Self.PROMOTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROMOTION_VALUETYPE">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PROMOTION">
+              <PropertyRef Name="Value_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECHARGE_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="RECHARGE" Type="Self.RECHARGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="RECHARGE">
+              <PropertyRef Name="Customer_Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECHARGE_RECHARGE_STATE">
+          <End Role="RECHARGE_STATE" Type="Self.RECHARGE_STATE" Multiplicity="1" />
+          <End Role="RECHARGE" Type="Self.RECHARGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECHARGE_STATE">
+              <PropertyRef Name="State_Id" />
+            </Principal>
+            <Dependent Role="RECHARGE">
+              <PropertyRef Name="Recharge_State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CELLPHONE_COMPANYModelStoreContainer">
+          <EntitySet Name="CALL" EntityType="Self.CALL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CALL_STATE" EntityType="Self.CALL_STATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER_BONUS" EntityType="Self.CUSTOMER_BONUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER_PHONE" EntityType="Self.CUSTOMER_PHONE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MINIMUN_RECHARGE" EntityType="Self.MINIMUN_RECHARGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRICE" EntityType="Self.PRICE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROMOTION" EntityType="Self.PROMOTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROMOTION_VALUETYPE" EntityType="Self.PROMOTION_VALUETYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RECHARGE" EntityType="Self.RECHARGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RECHARGE_STATE" EntityType="Self.RECHARGE_STATE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CALL_HISTORY_CALL_STATE" Association="Self.FK_CALL_HISTORY_CALL_STATE">
+            <End Role="CALL_STATE" EntitySet="CALL_STATE" />
+            <End Role="CALL" EntitySet="CALL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALL_HISTORY_CUSTOMER" Association="Self.FK_CALL_HISTORY_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CALL" EntitySet="CALL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMER_BONUS_CUSTOMER" Association="Self.FK_CUSTOMER_BONUS_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CUSTOMER_BONUS" EntitySet="CUSTOMER_BONUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMER_BONUS_PROMOTION" Association="Self.FK_CUSTOMER_BONUS_PROMOTION">
+            <End Role="PROMOTION" EntitySet="PROMOTION" />
+            <End Role="CUSTOMER_BONUS" EntitySet="CUSTOMER_BONUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMERPHONE" Association="Self.FK_CUSTOMERPHONE">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CUSTOMER_PHONE" EntitySet="CUSTOMER_PHONE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROMOTION_PROMOTION_VALUETYPE" Association="Self.FK_PROMOTION_PROMOTION_VALUETYPE">
+            <End Role="PROMOTION_VALUETYPE" EntitySet="PROMOTION_VALUETYPE" />
+            <End Role="PROMOTION" EntitySet="PROMOTION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECHARGE_CUSTOMER" Association="Self.FK_RECHARGE_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="RECHARGE" EntitySet="RECHARGE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECHARGE_RECHARGE_STATE" Association="Self.FK_RECHARGE_RECHARGE_STATE">
+            <End Role="RECHARGE_STATE" EntitySet="RECHARGE_STATE" />
+            <End Role="RECHARGE" EntitySet="RECHARGE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CELLPHONE_COMPANYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CallEntity">
+          <Key>
+            <PropertyRef Name="PhoneCall_Id" />
+          </Key>
+          <Property Name="PhoneCall_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_id" Type="Int32" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Destination_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Initial_DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Final_DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Call_Duration" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Call_Cost" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Call_State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CALL_STATE1" Relationship="Self.FK_CALL_HISTORY_CALL_STATE" FromRole="CALL" ToRole="CALL_STATE" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CALL_HISTORY_CUSTOMER" FromRole="CALL" ToRole="CUSTOMER" />
+        </EntityType>
+        <EntityType Name="CallStateEntity">
+          <Key>
+            <PropertyRef Name="State_Id" />
+          </Key>
+          <Property Name="State_Id" Type="Int32" Nullable="false" />
+          <Property Name="State_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CALL" Relationship="Self.FK_CALL_HISTORY_CALL_STATE" FromRole="CALL_STATE" ToRole="CALL" />
+        </EntityType>
+        <EntityType Name="CustomerEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Phone_Number" />
+          </Key>
+          <Property Name="Id_Type" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Second_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CALL" Relationship="Self.FK_CALL_HISTORY_CUSTOMER" FromRole="CUSTOMER" ToRole="CALL" />
+          <NavigationProperty Name="CUSTOMER_BONUS" Relationship="Self.FK_CUSTOMER_BONUS_CUSTOMER" FromRole="CUSTOMER" ToRole="CUSTOMER_BONUS" />
+          <NavigationProperty Name="CUSTOMER_PHONE" Relationship="Self.FK_CUSTOMERPHONE" FromRole="CUSTOMER" ToRole="CUSTOMER_PHONE" />
+          <NavigationProperty Name="RECHARGE" Relationship="Self.FK_RECHARGE_CUSTOMER" FromRole="CUSTOMER" ToRole="RECHARGE" />
+        </EntityType>
+        <EntityType Name="CustomerBonusEntity">
+          <Key>
+            <PropertyRef Name="Bonus_Code" />
+          </Key>
+          <Property Name="Bonus_Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Id" Type="Int32" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Promotion_Id" Type="Int32" Nullable="false" />
+          <Property Name="Activation_day" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CUSTOMER_BONUS_CUSTOMER" FromRole="CUSTOMER_BONUS" ToRole="CUSTOMER" />
+          <NavigationProperty Name="PROMOTION" Relationship="Self.FK_CUSTOMER_BONUS_PROMOTION" FromRole="CUSTOMER_BONUS" ToRole="PROMOTION" />
+        </EntityType>
+        <EntityType Name="CustomerPhoneEntity">
+          <Key>
+            <PropertyRef Name="Internal_Id" />
+          </Key>
+          <Property Name="Internal_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Id" Type="Int32" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone_state" Type="Byte" Nullable="false" />
+          <Property Name="Minute_Balance" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Minutes_Use" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_CUSTOMERPHONE" FromRole="CUSTOMER_PHONE" ToRole="CUSTOMER" />
+        </EntityType>
+        <EntityType Name="MinimunRechargeEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Period" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MinimunValue" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PriceEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price1" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PromotionEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="Value_Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CUSTOMER_BONUS" Relationship="Self.FK_CUSTOMER_BONUS_PROMOTION" FromRole="PROMOTION" ToRole="CUSTOMER_BONUS" />
+          <NavigationProperty Name="PROMOTION_VALUETYPE" Relationship="Self.FK_PROMOTION_PROMOTION_VALUETYPE" FromRole="PROMOTION" ToRole="PROMOTION_VALUETYPE" />
+        </EntityType>
+        <EntityType Name="PromotionValueTypeEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PROMOTION" Relationship="Self.FK_PROMOTION_PROMOTION_VALUETYPE" FromRole="PROMOTION_VALUETYPE" ToRole="PROMOTION" />
+        </EntityType>
+        <EntityType Name="RechargeEntity">
+          <Key>
+            <PropertyRef Name="Recharge_Code" />
+          </Key>
+          <Property Name="Recharge_Code" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Id" Type="Int32" Nullable="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Recharge_value" Type="Decimal" Precision="7" Scale="0" Nullable="false" />
+          <Property Name="Recharge_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Recharge_State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_RECHARGE_CUSTOMER" FromRole="RECHARGE" ToRole="CUSTOMER" />
+          <NavigationProperty Name="RECHARGE_STATE1" Relationship="Self.FK_RECHARGE_RECHARGE_STATE" FromRole="RECHARGE" ToRole="RECHARGE_STATE" />
+        </EntityType>
+        <EntityType Name="RechargeStateEntity">
+          <Key>
+            <PropertyRef Name="State_Id" />
+          </Key>
+          <Property Name="State_Id" Type="Int32" Nullable="false" />
+          <Property Name="State_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="RECHARGE" Relationship="Self.FK_RECHARGE_RECHARGE_STATE" FromRole="RECHARGE_STATE" ToRole="RECHARGE" />
+        </EntityType>
+        <Association Name="FK_CALL_HISTORY_CALL_STATE">
+          <End Role="CALL_STATE" Type="CELLPHONE_COMPANYModel.CallStateEntity" Multiplicity="1" />
+          <End Role="CALL" Type="CELLPHONE_COMPANYModel.CallEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CALL_STATE">
+              <PropertyRef Name="State_Id" />
+            </Principal>
+            <Dependent Role="CALL">
+              <PropertyRef Name="Call_State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALL_HISTORY_CUSTOMER">
+          <End Role="CUSTOMER" Type="CELLPHONE_COMPANYModel.CustomerEntity" Multiplicity="1" />
+          <End Role="CALL" Type="CELLPHONE_COMPANYModel.CallEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="CALL">
+              <PropertyRef Name="Customer_id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMER_BONUS_CUSTOMER">
+          <End Role="CUSTOMER" Type="CELLPHONE_COMPANYModel.CustomerEntity" Multiplicity="1" />
+          <End Role="CUSTOMER_BONUS" Type="CELLPHONE_COMPANYModel.CustomerBonusEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="CUSTOMER_BONUS">
+              <PropertyRef Name="Customer_Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMERPHONE">
+          <End Role="CUSTOMER" Type="CELLPHONE_COMPANYModel.CustomerEntity" Multiplicity="1" />
+          <End Role="CUSTOMER_PHONE" Type="CELLPHONE_COMPANYModel.CustomerPhoneEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="CUSTOMER_PHONE">
+              <PropertyRef Name="Customer_Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECHARGE_CUSTOMER">
+          <End Role="CUSTOMER" Type="CELLPHONE_COMPANYModel.CustomerEntity" Multiplicity="1" />
+          <End Role="RECHARGE" Type="CELLPHONE_COMPANYModel.RechargeEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Principal>
+            <Dependent Role="RECHARGE">
+              <PropertyRef Name="Customer_Id" />
+              <PropertyRef Name="Phone_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUSTOMER_BONUS_PROMOTION">
+          <End Role="PROMOTION" Type="CELLPHONE_COMPANYModel.PromotionEntity" Multiplicity="1" />
+          <End Role="CUSTOMER_BONUS" Type="CELLPHONE_COMPANYModel.CustomerBonusEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROMOTION">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CUSTOMER_BONUS">
+              <PropertyRef Name="Promotion_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROMOTION_PROMOTION_VALUETYPE">
+          <End Role="PROMOTION_VALUETYPE" Type="CELLPHONE_COMPANYModel.PromotionValueTypeEntity" Multiplicity="1" />
+          <End Role="PROMOTION" Type="CELLPHONE_COMPANYModel.PromotionEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROMOTION_VALUETYPE">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PROMOTION">
+              <PropertyRef Name="Value_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECHARGE_RECHARGE_STATE">
+          <End Role="RECHARGE_STATE" Type="CELLPHONE_COMPANYModel.RechargeStateEntity" Multiplicity="1" />
+          <End Role="RECHARGE" Type="CELLPHONE_COMPANYModel.RechargeEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RECHARGE_STATE">
+              <PropertyRef Name="State_Id" />
+            </Principal>
+            <Dependent Role="RECHARGE">
+              <PropertyRef Name="Recharge_State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CallMonitorModelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CALL" EntityType="CELLPHONE_COMPANYModel.CallEntity" />
+          <EntitySet Name="CALL_STATE" EntityType="CELLPHONE_COMPANYModel.CallStateEntity" />
+          <EntitySet Name="CUSTOMER" EntityType="CELLPHONE_COMPANYModel.CustomerEntity" />
+          <EntitySet Name="CUSTOMER_BONUS" EntityType="CELLPHONE_COMPANYModel.CustomerBonusEntity" />
+          <EntitySet Name="CUSTOMER_PHONE" EntityType="CELLPHONE_COMPANYModel.CustomerPhoneEntity" />
+          <EntitySet Name="MINIMUN_RECHARGE" EntityType="CELLPHONE_COMPANYModel.MinimunRechargeEntity" />
+          <EntitySet Name="PRICE" EntityType="CELLPHONE_COMPANYModel.PriceEntity" />
+          <EntitySet Name="PROMOTION" EntityType="CELLPHONE_COMPANYModel.PromotionEntity" />
+          <EntitySet Name="PROMOTION_VALUETYPE" EntityType="CELLPHONE_COMPANYModel.PromotionValueTypeEntity" />
+          <EntitySet Name="RECHARGE" EntityType="CELLPHONE_COMPANYModel.RechargeEntity" />
+          <EntitySet Name="RECHARGE_STATE" EntityType="CELLPHONE_COMPANYModel.RechargeStateEntity" />
+          <AssociationSet Name="FK_CALL_HISTORY_CALL_STATE" Association="Self.FK_CALL_HISTORY_CALL_STATE">
+            <End Role="CALL_STATE" EntitySet="CALL_STATE" />
+            <End Role="CALL" EntitySet="CALL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALL_HISTORY_CUSTOMER" Association="Self.FK_CALL_HISTORY_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CALL" EntitySet="CALL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMER_BONUS_CUSTOMER" Association="Self.FK_CUSTOMER_BONUS_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CUSTOMER_BONUS" EntitySet="CUSTOMER_BONUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMERPHONE" Association="Self.FK_CUSTOMERPHONE">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CUSTOMER_PHONE" EntitySet="CUSTOMER_PHONE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECHARGE_CUSTOMER" Association="Self.FK_RECHARGE_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="RECHARGE" EntitySet="RECHARGE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUSTOMER_BONUS_PROMOTION" Association="Self.FK_CUSTOMER_BONUS_PROMOTION">
+            <End Role="PROMOTION" EntitySet="PROMOTION" />
+            <End Role="CUSTOMER_BONUS" EntitySet="CUSTOMER_BONUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROMOTION_PROMOTION_VALUETYPE" Association="Self.FK_PROMOTION_PROMOTION_VALUETYPE">
+            <End Role="PROMOTION_VALUETYPE" EntitySet="PROMOTION_VALUETYPE" />
+            <End Role="PROMOTION" EntitySet="PROMOTION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECHARGE_RECHARGE_STATE" Association="Self.FK_RECHARGE_RECHARGE_STATE">
+            <End Role="RECHARGE_STATE" EntitySet="RECHARGE_STATE" />
+            <End Role="RECHARGE" EntitySet="RECHARGE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CELLPHONE_COMPANYModelStoreContainer" CdmEntityContainer="CallMonitorModelEntities">
+          <EntitySetMapping Name="CALL">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.CallEntity">
+              <MappingFragment StoreEntitySet="CALL">
+                <ScalarProperty Name="PhoneCall_Id" ColumnName="PhoneCall_Id" />
+                <ScalarProperty Name="Customer_id" ColumnName="Customer_id" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Destination_Number" ColumnName="Destination_Number" />
+                <ScalarProperty Name="Initial_DateTime" ColumnName="Initial_DateTime" />
+                <ScalarProperty Name="Final_DateTime" ColumnName="Final_DateTime" />
+                <ScalarProperty Name="Call_Duration" ColumnName="Call_Duration" />
+                <ScalarProperty Name="Call_Cost" ColumnName="Call_Cost" />
+                <ScalarProperty Name="Call_State" ColumnName="Call_State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CALL_STATE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.CallStateEntity">
+              <MappingFragment StoreEntitySet="CALL_STATE">
+                <ScalarProperty Name="State_Id" ColumnName="State_Id" />
+                <ScalarProperty Name="State_Description" ColumnName="State_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMER">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.CustomerEntity">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="Id_Type" ColumnName="Id_Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Second_Name" ColumnName="Second_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMER_BONUS">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.CustomerBonusEntity">
+              <MappingFragment StoreEntitySet="CUSTOMER_BONUS">
+                <ScalarProperty Name="Bonus_Code" ColumnName="Bonus_Code" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Promotion_Id" ColumnName="Promotion_Id" />
+                <ScalarProperty Name="Activation_day" ColumnName="Activation_day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMER_PHONE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.CustomerPhoneEntity">
+              <MappingFragment StoreEntitySet="CUSTOMER_PHONE">
+                <ScalarProperty Name="Internal_Id" ColumnName="Internal_Id" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Phone_state" ColumnName="Phone_state" />
+                <ScalarProperty Name="Minute_Balance" ColumnName="Minute_Balance" />
+                <ScalarProperty Name="Minutes_Use" ColumnName="Minutes_Use" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MINIMUN_RECHARGE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.MinimunRechargeEntity">
+              <MappingFragment StoreEntitySet="MINIMUN_RECHARGE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="MinimunValue" ColumnName="MinimunValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRICE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.PriceEntity">
+              <MappingFragment StoreEntitySet="PRICE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Price1" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROMOTION">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.PromotionEntity">
+              <MappingFragment StoreEntitySet="PROMOTION">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Value_Type" ColumnName="Value_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROMOTION_VALUETYPE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.PromotionValueTypeEntity">
+              <MappingFragment StoreEntitySet="PROMOTION_VALUETYPE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECHARGE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.RechargeEntity">
+              <MappingFragment StoreEntitySet="RECHARGE">
+                <ScalarProperty Name="Recharge_Code" ColumnName="Recharge_Code" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Recharge_value" ColumnName="Recharge_value" />
+                <ScalarProperty Name="Recharge_Date" ColumnName="Recharge_Date" />
+                <ScalarProperty Name="Recharge_State" ColumnName="Recharge_State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECHARGE_STATE">
+            <EntityTypeMapping TypeName="CELLPHONE_COMPANYModel.RechargeStateEntity">
+              <MappingFragment StoreEntitySet="RECHARGE_STATE">
+                <ScalarProperty Name="State_Id" ColumnName="State_Id" />
+                <ScalarProperty Name="State_Description" ColumnName="State_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
