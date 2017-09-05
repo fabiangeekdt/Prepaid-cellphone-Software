@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System;
 using System.Web;
+using Common.Entities;
 
 namespace Common.Helpers
 {
@@ -59,7 +60,7 @@ namespace Common.Helpers
         {
             try
             {
-                var ser = new DataContractJsonSerializer(typeof(T));
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
                 MemoryStream ms = new MemoryStream();
                 ser.WriteObject(ms, obj);
                 string jsonString = Encoding.UTF8.GetString(ms.ToArray());

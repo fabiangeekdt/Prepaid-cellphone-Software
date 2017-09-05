@@ -18,6 +18,7 @@ using System.Linq;
 using Common.Entities;
 using System.Collections.Generic;
 using DataTier.Helpers;
+using System.Data.Entity.Validation;
 
 namespace DataTier
 {
@@ -41,14 +42,15 @@ namespace DataTier
                 using (var dbCtx = new CallMonitorModelEntities())
                 {
                     dbCtx.CUSTOMER.Add(new CustomerEntity
-                    {
-                        Id = customer.Id,
-                        Id_Type = customer.Id_Type,
-                        First_Name = customer.FirstName,
-                        Second_Name = customer.SecondName,
-                        Last_Name = customer.LastName,
-                        Phone_Number = customer.PhoneNumber
-                    });
+                        {
+                            Id = customer.Id,
+                            Id_Type = customer.Id_Type,
+                            First_Name = customer.FirstName,
+                            Second_Name = customer.SecondName,
+                            Last_Name = customer.LastName,
+                            Phone_Number = customer.PhoneNumber
+                        }
+                    );
                     res = dbCtx.SaveChanges();
                 }
                 return res;
@@ -165,30 +167,39 @@ namespace DataTier
         /// <returns></returns>
         public int phoneRecharge(Recharge charge)
         {
+            int res = 0;
             try
             {
-                var dbCtx = new CallMonitorModelEntities();
-                RechargeEntity reCharge = dbCtx.RECHARGE.Where(c => c.Customer_Id == charge.Id && c.Phone_Number == charge.PhoneNumber).FirstOrDefault();
-                reCharge.Customer_Id = charge.Id;
-                reCharge.Phone_Number = charge.PhoneNumber;
-                reCharge.Recharge_value = charge.Value;
-                reCharge.Recharge_Date = charge.Date;
-                reCharge.Recharge_State = charge.State;
-
-                return dbCtx.SaveChanges();
-                //using (var dbCtx = new CallMonitorModelEntities())
-                //{
-                //    dbCtx.RECHARGE.Add(new RechargeEntity
-                //    {
-                //        Customer_Id = charge.Id,
-                //        Phone_Number = charge.PhoneNumber,
-                //        Recharge_value = charge.Value,
-                //        Recharge_Date = charge.Date,
-                //        Recharge_State = charge.State
-                //    });
-                //    res = dbCtx.SaveChanges();
+                //var dbCtx = new CallMonitorModelEntities();
+                //RechargeEntity reCharge = new RechargeEntity();
+                //reCharge = dbCtx.RECHARGE.Where(c => c.Customer_Id == charge.Id && c.Phone_Number == charge.PhoneNumber).FirstOrDefault();
+                //if (reCharge != null)
+                //{ 
+                //    reCharge.Customer_Id = charge.Id;
+                //    reCharge.Phone_Number = charge.PhoneNumber;
+                //    reCharge.Recharge_value = charge.Value;
+                //    reCharge.Recharge_Date = charge.Date;
+                //    reCharge.Recharge_State = charge.State;
                 //}
-                //return res;
+                //else
+                //{
+                //    dbCtx.RECHARGE.Add(new RechargeEntity{ Customer_Id = charge.Id, Phone_Number = charge.PhoneNumber, Recharge_value = charge.Value, Recharge_Date = charge.Date, Recharge_State = charge.State });
+                //}
+
+                //return dbCtx.SaveChanges();
+                using (var dbCtx = new CallMonitorModelEntities())
+                {
+                    dbCtx.RECHARGE.Add(new RechargeEntity
+                    {
+                        Customer_Id = charge.Id,
+                        Phone_Number = charge.PhoneNumber,
+                        Recharge_value = charge.Value,
+                        Recharge_Date = charge.Date,
+                        Recharge_State = charge.State
+                    });
+                    res = dbCtx.SaveChanges();
+                }
+                return res;
             }
             catch (Exception ex)
             {

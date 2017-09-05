@@ -35,7 +35,8 @@ namespace BusinessTier.Transactions
         {
             try
             {
-                Price p = dataAccess.getPrice(Convert.ToInt32(idPrice));
+                Price price = SerializationHelpers.DeserializeJson<Price>(idPrice);
+                Price p = dataAccess.getPrice(Convert.ToInt32(price.Id));
                 if (p != null)
                     return SerializationHelpers.SerializeJson(p);
                 else

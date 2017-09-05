@@ -26,8 +26,7 @@ namespace BusinessTier.Interfaces
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/Register/")]
+            UriTemplate = "Register")]
         string subscribeCustomer(Stream Customer);
 
         [OperationContract]
@@ -35,39 +34,38 @@ namespace BusinessTier.Interfaces
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/Recharge")]
+            UriTemplate = "Recharge")]
         string rechargePhoneNumber(Stream RechargePhone);
 
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/StartPhoneCall")]
-        string startPhoneCall(Stream Start);
+        //[OperationContract]
+        //[WebInvoke(Method = "POST",
+        //    RequestFormat = WebMessageFormat.Json,
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.Wrapped,
+        //    UriTemplate = "/StartPhoneCall")]
+        //string startPhoneCall(string Start);
+
+        //[OperationContract]
+        //[WebInvoke(Method = "POST",
+        //    RequestFormat = WebMessageFormat.Json,
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.Wrapped,
+        //    UriTemplate = "/EndPhoneCall")]
+        //string endPhoneCall(string End);
+
+        //[OperationContract]
+        //[WebInvoke(Method = "POST",
+        //    RequestFormat = WebMessageFormat.Json,
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.Wrapped,
+        //    UriTemplate = "/GetPhoneBalance")]
+        //string getPhoneBalance(string CustomerBalance);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/EndPhoneCall")]
-        string endPhoneCall(Stream End);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/GetPhoneBalance")]
-        string getPhoneBalance(Stream CustomerBalance);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/getPricePerMinute")]
+            UriTemplate = "getPricePerMinute")]
         string getPricePerMinute(Stream idprice);
     }
 }

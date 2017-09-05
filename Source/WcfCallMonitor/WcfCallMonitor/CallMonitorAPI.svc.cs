@@ -46,20 +46,20 @@ namespace WcfCallMonitor
             return transaction.getTransaction("rechargePhoneNumber", recharge);
         }
 
-        public string startPhoneCall(Stream call)
-        {
-            return transaction.getTransaction("startPhoneCall", call);
-        }
+        //public string startPhoneCall(string call)
+        //{
+        //    return transaction.getTransaction("startPhoneCall", call);
+        //}
 
-        public string endPhoneCall(Stream call)
-        {
-            return transaction.getTransaction("endPhoneCall", call);
-        }
+        //public string endPhoneCall(string call)
+        //{
+        //    return transaction.getTransaction("endPhoneCall", call);
+        //}
 
-        public string getPhoneBalance(Stream customer)
-        {
-            return transaction.getTransaction("getPhoneBalance", customer);
-        }
+        //public string getPhoneBalance(string customer)
+        //{
+        //    return transaction.getTransaction("getPhoneBalance", customer);
+        //}
 
         public string getPricePerMinute(Stream idPrice)
         {

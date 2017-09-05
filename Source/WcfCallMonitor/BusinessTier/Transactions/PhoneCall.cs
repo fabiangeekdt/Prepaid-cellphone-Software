@@ -107,7 +107,7 @@ namespace BusinessTier.Transactions
             throw new NotImplementedException();
         }
 
-        public string endPhoneCall(Stream data)
+        public string endPhoneCall(string data)
         {
             throw new NotImplementedException();
         }
