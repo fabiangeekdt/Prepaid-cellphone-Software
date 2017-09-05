@@ -17,13 +17,11 @@ using Common.Entities;
 using Common.Enum;
 using Common.Helpers;
 using Common.Validations;
+using BusinessTier.Services.Call.Simulator.Proxy;
+using BusinessTier.Services.Call.Simulator.Proxy.Entity;
 using DataTier;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessTier.Transactions
 {
@@ -76,6 +74,11 @@ namespace BusinessTier.Transactions
                 cusPhone = dataAccess.getBalance(cus.Id, cus.PhoneNumber);
                 transValidations.validateMinLeft(cusPhone.MinuteBalance);
 
+                var makecall = new CallSimulatorProxy();
+                //makecall.StartPhoneCall();
+
+
+
                 makePhoneCall();
                 return string.Empty;
             }
@@ -88,6 +91,7 @@ namespace BusinessTier.Transactions
                 return SerializationHelpers.SerializeJson<Response>(resp);
             }
         }
+
 
         private void makePhoneCall()
         {

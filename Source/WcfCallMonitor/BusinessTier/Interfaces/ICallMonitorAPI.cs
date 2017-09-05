@@ -27,7 +27,7 @@ namespace BusinessTier.Interfaces
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
-            UriTemplate = "/Register")]
+            UriTemplate = "/Register/")]
         string subscribeCustomer(Stream Customer);
 
         [OperationContract]

@@ -16,7 +16,6 @@ using Common.Entities;
 using Common.Enum;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataTier.Helpers
 {
