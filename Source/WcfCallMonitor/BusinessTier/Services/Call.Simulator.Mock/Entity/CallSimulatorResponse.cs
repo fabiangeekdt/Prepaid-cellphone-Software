@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	Entity PhoneCall Simulator(Mock) Response. 
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -13,14 +13,14 @@
 */
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Common.Validations
+namespace BusinessTier.Services.Call.Simulator.Mock.Entity
 {
-    public class CommonValidations
+    public class CallSimulatorResponse
     {
+        public DateTime startCall { get; set; }
+        public DateTime endCall { get; set; }
+        public int answerType { get; set; }
+        public string answerDesc { get; set; }
     }
 }

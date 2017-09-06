@@ -1,9 +1,23 @@
-﻿using System;
-using BusinessTier.Services.Call.Simulator.Proxy.Entity;
+﻿#region Authoring Description
+/* 
+* =================================================================================
+* Author:		Fabian Andres Moreno chacon
+* Create date:  Sept 2, 2017
+* Description:	PhoneCall Simulator(Mock) Class. 
+* =================================================================================
+* ============================= CHANGES ===========================================
+* Author:		
+* Create date: 
+* Description:	
+* =================================================================================
+*/
+#endregion
+using System;
+using BusinessTier.Services.Call.Simulator.Mock.Entity;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BusinessTier.Services.Call.Simulator.Proxy
+namespace BusinessTier.Services.Call.Simulator.Mock
 {
     public class CallSimulatorProxy
     {
@@ -12,10 +26,10 @@ namespace BusinessTier.Services.Call.Simulator.Proxy
         }
 
         /// <summary>
-        /// 
+        /// Call simulator Method
         /// </summary>
-        /// <param name="call"></param>
-        /// <returns></returns>
+        /// <param name="call">Object: CallSimulatorRequest with Call data</param>
+        /// <returns>Object: CallSimulatorResponse with Hangout Call data</returns>
         public CallSimulatorResponse  StartPhoneCall(CallSimulatorRequest call)
         {
             try
@@ -31,10 +45,10 @@ namespace BusinessTier.Services.Call.Simulator.Proxy
         }
 
         /// <summary>
-        /// 
+        /// Method for simulating a PhoneCall. this method choose randomly an answer call and retrieve the information.
         /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
+        /// <param name="e">Object: CallSimulatorRequest with Call data</param>
+        /// <returns>Object: CallSimulatorResponse with Hangout Call data</returns>
         private CallSimulatorResponse Phonecall(CallSimulatorRequest e)
         {
             try

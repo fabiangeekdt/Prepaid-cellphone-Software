@@ -1,7 +1,7 @@
 -- =================================================================================
 -- Author:		Fabian Andres Moreno chacon
--- Create date: 
--- Description:	
+-- Create date: Sept 02, 2017
+-- Description:	initilize database information
 -- =================================================================================
 -- ============================= CHANGES ===========================================
 -- Author:		
@@ -31,7 +31,7 @@ INSERT INTO [dbo].[PROMOTION] ([Description],[Value],[Value_Type]) VALUES ('Rech
 INSERT INTO [dbo].[PROMOTION] ([Description],[Value],[Value_Type]) VALUES ('Bonus derived from the average of the minimun recharges during the past week',5,1);
 ---- [PRICE] inserts
 INSERT INTO [dbo].[PRICE] ([Price],[Description]) VALUES ( 166.6,'Minute price');
-INSERT INTO [dbo].[PRICE] ([Price],[Description]) VALUES ( 2.81,'Second price');
+INSERT INTO [dbo].[PRICE] ([Price],[Description]) VALUES ( 2.77,'Second price');
 ---- [MINIMUN_RECHARGE] inserts
 INSERT INTO [dbo].[MINIMUN_RECHARGE] ([Id],[Period],[MinimunValue]) VALUES (1,'Daily',5000);
 INSERT INTO [dbo].[MINIMUN_RECHARGE] ([Id],[Period],[MinimunValue]) VALUES (2,'Weekly',1000);

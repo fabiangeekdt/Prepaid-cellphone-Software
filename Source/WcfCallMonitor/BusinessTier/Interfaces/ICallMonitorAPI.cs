@@ -3,7 +3,8 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	Service's Interface which exposed all the webMethods of the 
+*               RestFul service.
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		

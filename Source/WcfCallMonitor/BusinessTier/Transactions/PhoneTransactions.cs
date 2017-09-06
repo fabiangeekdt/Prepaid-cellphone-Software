@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 3, 2017
-* Description:	
+* Description:	Execute a phone Transaction Request: Recharge, Balance
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -50,10 +50,12 @@ namespace BusinessTier.Transactions
         }
 
         /// <summary>
-        /// 
+        /// Execute an incoming Recharge request, calculating:
+        /// 1. Saving Recharge into DB
+        /// 2. Validating the Promotions for the Customer
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">Stream with Json Data; Object: Recharge Entity</param>
+        /// <returns>Stream with Json Data; Object: Response Data</returns>
         public Stream rechargePhoneNumber(Stream data)
         {
             try
@@ -91,15 +93,16 @@ namespace BusinessTier.Transactions
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: rechargePhoneNumber, " + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
-                resp.exception = ex;
+                resp.exception = "Customer No Exist: " + ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
 
         /// <summary>
-        /// 
+        /// Retrieve the actual customer's balance and insert it into the database if the 
+        /// customer don't have a balance yet. otherwise the balance it is updated.
         /// </summary>
-        /// <param name="valueProm"></param>
+        /// <param name="valueProm">Balance value</param>
         private void getCustomerBalance(decimal valueProm)
         {
             try
@@ -124,10 +127,10 @@ namespace BusinessTier.Transactions
         }
 
         /// <summary>
-        /// 
+        /// Execute an incoming Request, for retrieving the customer balance.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">Stream with Json Data; Object: CustomerPhone Entity</param>
+        /// <returns>Stream with Json Data; Object: Response Data</returns>
         public Stream getPhoneBalance(Stream data)
         {
             try
@@ -146,7 +149,7 @@ namespace BusinessTier.Transactions
                 else
                 {
                     resp.idResponse = 1;
-                    resp.response = "Cannot retrieve balance";
+                    resp.response = "Customer: " + cus.FirstName + " " + cus.SecondName + " " + cus.LastName + "\n Balance(min): 0 \n Minutes used: 0";
                     resp.exception = null;
                 }
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
@@ -155,15 +158,16 @@ namespace BusinessTier.Transactions
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: getPhoneBalance, " + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
-                resp.exception = ex;
+                resp.exception = ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
 
         /// <summary>
-        /// 
+        /// Method that iterates into each promotion.
         /// </summary>
-        /// <param name="promAdv"></param>
+        /// <param name="promAdv">Reference value for warning the customer if he/she won an promotion</param>
+        /// <param name="valueProm">Reference value for retrieving the value won.</param>
         private void customerPromotions(ref string promAdv, ref decimal valueProm)
         {
             try
@@ -206,12 +210,13 @@ namespace BusinessTier.Transactions
         }
 
         /// <summary>
-        /// 
+        /// Validate if the Customer won a Promotion for calculating the VAlue awarded and save it into the DB
         /// </summary>
-        /// <param name="promAdv"></param>
-        /// <param name="p"></param>
-        /// <param name="valueRecharge"></param>
-        /// <returns></returns>
+        /// <param name="promAdv">Reference value for warning the customer if he/she won an promotion</param>
+        /// <param name="valueProm">Reference value for retrieving the value won.</param>
+        /// <param name="p">Promotion Enum type</param>
+        /// <param name="valueRecharge">Value Recharged by the Customer</param>
+        /// <returns>true if the customer won a promotion, otherwise exit method.</returns>
         private bool saveGrantedBonus(ref string promAdv, ref decimal valueProm, Promotion p, decimal valueRecharge)
         {
             try
@@ -236,7 +241,6 @@ namespace BusinessTier.Transactions
                     int res = dataAccess.customerBonus(cusBonus);
                     promAdv = "You have won a recharge bonus of " + rec.Value;
                 }
-
                 return bonusGranted;
             }
             catch (Exception ex)

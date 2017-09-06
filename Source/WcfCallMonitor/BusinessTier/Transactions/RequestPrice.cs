@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	Execute a get Price Transaction Request
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -32,10 +32,12 @@ namespace BusinessTier.Transactions
         }
 
         /// <summary>
-        /// 
+        /// Execute an incoming Get Price request for retrieving the price of: 
+        /// 1. Minutes
+        /// 2. Seconds
         /// </summary>
-        /// <param name="idPrice"></param>
-        /// <returns></returns>
+        /// <param name="idPrice">Stream with Json Data; Object: Prices Data</param>
+        /// <returns>Stream with Json Data; Object: Response Data</returns>
         public Stream GetPrice(Stream idPrice)
         {
             try
@@ -61,7 +63,7 @@ namespace BusinessTier.Transactions
             {
                 resp.idResponse = 400;
                 resp.response = "";
-                resp.exception = ex;
+                resp.exception = ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson(resp));
             }
         }

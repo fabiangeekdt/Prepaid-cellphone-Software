@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	Enumeration class to enumerate the Recharge states
+* Description:	Entity PhoneCall Simulator(Mock) Request. 
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -12,13 +12,15 @@
 * =================================================================================
 */
 #endregion
+using System;
 
-namespace Common.Enum
+namespace BusinessTier.Services.Call.Simulator.Mock.Entity
 {
-    public enum RechargeState
+    public class CallSimulatorRequest
     {
-        Accepted,
-        Pending,
-        Rejected,
+        public string fromPhoneNumber { get; set; }
+        public string toPhoneNumber { get; set; }
+        public DateTime startCall { get; set; }
+        public decimal minutesLet { get; set; }
     }
 }

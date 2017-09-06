@@ -46,9 +46,9 @@
     <Compile Include="Interfaces\ITransactionFactory.cs" />
     <Compile Include="Operations\BussinessOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Call.Simulator.Proxy\CallSimulatorProxy.cs" />
-    <Compile Include="Services\Call.Simulator.Proxy\Entity\CallSimulatorRequest.cs" />
-    <Compile Include="Services\Call.Simulator.Proxy\Entity\CallSimulatorResponse.cs" />
+    <Compile Include="Services\Call.Simulator.Mock\CallSimulatorProxy.cs" />
+    <Compile Include="Services\Call.Simulator.Mock\Entity\CallSimulatorRequest.cs" />
+    <Compile Include="Services\Call.Simulator.Mock\Entity\CallSimulatorResponse.cs" />
     <Compile Include="Transactions\PhoneTransactions.cs" />
     <Compile Include="Transactions\PhoneCall.cs" />
     <Compile Include="Transactions\RequestPrice.cs" />

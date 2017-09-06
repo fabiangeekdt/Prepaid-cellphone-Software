@@ -3,7 +3,8 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	business Validations class that contains the validations used by the 
+*               transactions.
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -13,7 +14,6 @@
 */
 #endregion
 using System;
-using Common.Entities;
 using Common.Enum;
 
 namespace Common.Validations
@@ -21,9 +21,8 @@ namespace Common.Validations
     public class BusinessValidations
     {
         /// <summary>
-        /// 
+        /// Validate if an object is null
         /// </summary>
-        /// <returns></returns>
         public void validateCustomerSubscription(object cus)
         {
             if (cus == null)
@@ -33,8 +32,8 @@ namespace Common.Validations
         /// <summary>
         /// Validate if the customer has no bonuses granted today.
         /// </summary>
-        /// <param name="bonusActivation"></param>
-        /// <returns></returns>
+        /// <param name="bonusActivation">last bonus activation day</param>
+        /// <returns>return true if the customer has no bonus granted today.</returns>
         public bool validateGrantedBonus(DateTime activationDay)
         {
             try
@@ -51,12 +50,11 @@ namespace Common.Validations
         }
 
         /// <summary>
-        /// 
+        /// Validate if the recharged value is major than the average recharge values
         /// </summary>
-        /// <param name="bonus"></param>
-        /// <param name="rechargedSum"></param>
-        /// <param name=""></param>
-        /// <returns></returns>
+        /// <param name="rechargeValue"></param>
+        /// <param name="prevrechargeValues"></param>
+        /// <returns>return true if the recharge value is major than the average recharge values</returns>
         public bool validateAvgRecharges(decimal rechargeValue, decimal prevrechargeValues )
         {
             try
@@ -73,11 +71,11 @@ namespace Common.Validations
         }
 
         /// <summary>
-        /// 
+        /// validate the minimun value of recharges depending on the period time
         /// </summary>
-        /// <param name="period"></param>
-        /// <param name="minRechargeValue"></param>
-        /// <param name="rechargeValue"></param>
+        /// <param name="period">Period Enum</param>
+        /// <param name="minRechargeValue">minimun recharged value</param>
+        /// <param name="rechargeValue">actual recharge value</param>
         /// <returns></returns>
         public bool validateMinRecharges(Period period, decimal minRechargeValue, decimal rechargeValue)
         {
@@ -106,10 +104,9 @@ namespace Common.Validations
         }
 
         /// <summary>
-        /// 
+        /// Validate if the customer has minutes left for making the call.
         /// </summary>
-        /// <param name="cus"></param>
-        /// <returns></returns>
+        /// <param name="MinuteBalance">actual customer's balance.</param>
         public void validateMinLeft(decimal MinuteBalance)
         {
             if (MinuteBalance == 0)

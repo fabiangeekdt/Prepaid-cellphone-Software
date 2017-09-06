@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 3, 2017
-* Description:	
+* Description:	Execute a Register Customer Transaction Request
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -26,6 +26,10 @@ namespace BusinessTier.Transactions
         Customer cus;
         Response resp;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data">Stream with Json Data; Object: Customer Data</param>
         public SubscribeCustomer(Stream data)
         {
             dataAccess = new DAO();
@@ -34,22 +38,22 @@ namespace BusinessTier.Transactions
         }
 
         /// <summary>
-        /// 
+        /// Execute an incoming Register Customer request for saving the customer data into the DataBase.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Stream with Json Data; Object: Response Data</returns>
         public Stream subscribe()
         {
             try
             {
                 int res = dataAccess.subscribeCustomer(cus);
                 if (res != 0) { 
-                    resp.idResponse = res;
+                    resp.idResponse = 0;
                     resp.response = "Customer: " + cus.FirstName + " " + cus.SecondName + " " + cus.LastName +" created.";
                     resp.exception = null;
                 }
                 else
                 {
-                    resp.idResponse = res;
+                    resp.idResponse = 1;
                     resp.response = "Customer: " + cus.FirstName + " " + cus.SecondName + " " + cus.LastName + " not created.";
                     resp.exception = null;
                 }
@@ -59,7 +63,7 @@ namespace BusinessTier.Transactions
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: subscribe.";
-                resp.exception = ex;
+                resp.exception = ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }

@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	Execute a call Transaction Request
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -14,11 +14,10 @@
 #endregion
 using BusinessTier.Operations;
 using Common.Entities;
-using Common.Enum;
 using Common.Helpers;
 using Common.Validations;
-using BusinessTier.Services.Call.Simulator.Proxy;
-using BusinessTier.Services.Call.Simulator.Proxy.Entity;
+using BusinessTier.Services.Call.Simulator.Mock;
+using BusinessTier.Services.Call.Simulator.Mock.Entity;
 using DataTier;
 using System;
 using System.IO;
@@ -49,14 +48,19 @@ namespace BusinessTier.Transactions
         }
 
         /// <summary>
-        /// 
+        /// Execute an incoming Call Request. Calculating:
+        /// 1.Call Duration.
+        /// 2.Call Cost.
+        /// 3.Minutes Used.
+        /// 4.Minutes Balance.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">Stream with Json Data; Object: Call Entity</param>
+        /// <returns>Stream with Json Data; Object: Response Entity</returns>
         public Stream startPhoneCall(Stream data)
         {
             try
             {
+                decimal callLast = 0;
                 call = SerializationHelpers.DeserializeJson<Call>(data);
 
                 cus = dataAccess.getCustomerPerPhone(call.PhoneNumber);
@@ -72,9 +76,9 @@ namespace BusinessTier.Transactions
                 var callreq = new CallSimulatorRequest { toPhoneNumber = cus.PhoneNumber, fromPhoneNumber = call.DestinationNumber, startCall = DateTime.Now, minutesLet = cusPhone.MinuteBalance };
                 var callresp = new CallSimulatorResponse();
                 callresp = makecall.StartPhoneCall(callreq);
-                decimal callLast = 0;
-                TimeSpan duCall = callresp.endCall - callresp.startCall;
-                if(Convert.ToDecimal(duCall.TotalSeconds) >= (cusPhone.MinuteBalance * 60))
+                
+                TimeSpan duCall = BussinessOps.GetDurationCall(callresp);
+                if (Convert.ToDecimal(duCall.TotalSeconds) >= (cusPhone.MinuteBalance * 60))
                 {
                     callLast = cusPhone.MinuteBalance;
                     cusPhone.MinuteBalance = 0;
@@ -84,16 +88,17 @@ namespace BusinessTier.Transactions
                 else
                 {
                     callLast = Convert.ToDecimal(duCall.TotalSeconds);
-                    cusPhone.MinuteBalance -= callLast / 60; 
+                    cusPhone.MinuteBalance -= callLast / 60;
                     cusPhone.MinutesUsed += callLast / 60;
-                    dataAccess.updBalance(cusPhone);                 
+                    dataAccess.updBalance(cusPhone);
                 }
-                var callCost = callLast * p.Prices;
+
+                var callCost = BussinessOps.GetCallCost(p.Prices, callLast);
                 var c = new Call { Id = cus.Id, PhoneNumber = cus.PhoneNumber, DestinationNumber = call.DestinationNumber, InitialDatetime = callresp.startCall, FinalDatetime = callresp.endCall, Duration = callLast, Cost = callCost, State = callresp.answerType };
                 var res = dataAccess.initPhoneCall(c);
 
                 resp.idResponse = 0;
-                resp.response = "From Phone Number: " + cus.PhoneNumber + " \nTo from Phone Number: " + call.DestinationNumber + " \nStart Call DateTime: " +c.InitialDatetime.ToString() + " \nEndCall DateTime : " + c.FinalDatetime.ToString() + 
+                resp.response = "From Phone Number: " + cus.PhoneNumber + " \nTo from Phone Number: " + call.DestinationNumber + " \nStart Call DateTime: " + c.InitialDatetime.ToString() + " \nEndCall DateTime : " + c.FinalDatetime.ToString() +
                                 " \nCall Duration: " + c.Duration.ToString() + "sec. \n Call Cost: " + c.Cost + " \n Call State: " + callresp.answerDesc;
                 resp.exception = null;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
@@ -102,7 +107,7 @@ namespace BusinessTier.Transactions
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: PhoneCall";
-                resp.exception = ex;
+                resp.exception = ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }

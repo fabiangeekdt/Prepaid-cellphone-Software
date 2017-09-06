@@ -1,7 +1,7 @@
 -- =================================================================================
 -- Author:		Fabian Andres Moreno chacon
--- Create date: 
--- Description:	
+-- Create date: Sept 02, 2017
+-- Description:	Trigger creation for update the Recharge State 
 -- =================================================================================
 -- ============================= CHANGES ===========================================
 -- Author:		

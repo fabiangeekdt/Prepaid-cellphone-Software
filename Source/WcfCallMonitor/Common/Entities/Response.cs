@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 3, 2017
-* Description:	
+* Description:	Response Entity to retrieve the information to the Client.
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -25,6 +25,6 @@ namespace Common.Entities
         [DataMember]
         public string response { get; set; }
         [DataMember]
-        public Exception exception { get; set; }
+        public string exception { get; set; }
     }
 }

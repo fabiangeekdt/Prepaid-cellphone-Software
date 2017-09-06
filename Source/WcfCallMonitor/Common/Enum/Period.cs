@@ -3,7 +3,7 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	Enumeration class to enumerate the Promotion periods
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		

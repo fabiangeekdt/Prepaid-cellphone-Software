@@ -3,7 +3,8 @@
 * =================================================================================
 * Author:		Fabian Andres Moreno chacon
 * Create date:  Sept 2, 2017
-* Description:	
+* Description:	business operations class is used to host the methods that execute
+*               or perform a common operation in the transactions or the solution.
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -13,43 +14,21 @@
 */
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Entities;
-using DataTier;
 using Common.Enum;
+using BusinessTier.Services.Call.Simulator.Mock.Entity;
 
 namespace BusinessTier.Operations
 {
     public static class BussinessOps
     {
         /// <summary>
-        /// 
+        /// Calculate the bonus according the type and value of the promotion.
+        /// this method is open so, any dev can add more promotion type depending on the clients needs.
         /// </summary>
-        /// <param name="call"></param>
-        /// <param name="cusPhone"></param>
-        /// <returns></returns>
-        public static int callCountDown(Call call, CustomerPhone cusPhone)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="avg"></param>
-        /// <param name="ptype"></param>
-        /// <param name="promValue"></param>
-        /// <returns></returns>
+        /// <param name="avg">Customer Recharge Value</param>
+        /// <param name="ptype">Promotion type</param>
+        /// <param name="promValue">Promotion Value</param>
+        /// <returns>Value awarded</returns>
         public static decimal calculateBonus(decimal avg, PromotionType ptype, int promValue)
         {
             try
@@ -66,6 +45,30 @@ namespace BusinessTier.Operations
             {
                 throw new Exception("calculateBonus error: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Calculate the phone call cost.
+        /// </summary>
+        /// <param name="p">Price per Call Fraction</param>
+        /// <param name="callLast">Call Duration</param>
+        /// <returns>Call Cost</returns>
+        public static decimal GetCallCost(Decimal price, decimal callLast)
+        {
+            if (callLast != 0 && price != 0)
+                return callLast * price;
+            else
+                return 0;
+        }
+
+        /// <summary>
+        /// Calculate the duration of the Phone Call
+        /// </summary>
+        /// <param name="callresp">Call Information</param>
+        /// <returns>Duration Call</returns>
+        public static TimeSpan GetDurationCall(CallSimulatorResponse callresp)
+        {
+            return callresp.endCall - callresp.startCall;
         }
     }
 }

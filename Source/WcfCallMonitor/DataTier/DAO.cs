@@ -28,6 +28,7 @@ namespace DataTier
         {
             eHelper = new EntityHelper();
         }
+
         /// <summary>
         /// insert the customer into the database company
         /// </summary>
@@ -63,8 +64,9 @@ namespace DataTier
         /// <summary>
         /// retrive the information of the customer by type id, id and phone number
         /// </summary>
-        /// <param name="Customer"></param>
-        /// <returns></returns>
+        /// <param name="Id"></param>
+        /// <param name="PhoneNumber"></param>
+        /// <returns>Customer</returns>
         public Customer getCustomerPerPhone(int Id, string PhoneNumber)
         {
             try
@@ -84,7 +86,7 @@ namespace DataTier
         /// retrive the information of the customer by type id, id and phone number
         /// </summary>
         /// <param name="Customer"></param>
-        /// <returns></returns>
+        /// <returns>Customer</returns>
         public Customer getCustomerPerPhone(string PhoneNumber)
         {
             try
@@ -103,7 +105,7 @@ namespace DataTier
         /// start the phone call made by the customer
         /// </summary>
         /// <param name="call"></param>
-        /// <returns></returns>
+        /// <returns>int</returns>
         public int initPhoneCall(Call call)
         {
             try
@@ -137,7 +139,7 @@ namespace DataTier
         /// retrieve the last call made by the customer
         /// </summary>
         /// <param name="call"></param>
-        /// <returns></returns>
+        /// <returns>Call</returns>
         private Call getLastCall(Call call)
         {
             try
@@ -156,7 +158,7 @@ namespace DataTier
         /// insert a recharge request from the customer into the database 
         /// </summary>
         /// <param name="charge"></param>
-        /// <returns></returns>
+        /// <returns>int</returns>
         public int phoneRecharge(Recharge charge)
         {
             int res = 0;
@@ -203,7 +205,7 @@ namespace DataTier
         /// Retrieve all the Recharges that the customer have done.
         /// </summary>
         /// <param name="customer"></param>
-        /// <returns></returns>
+        /// <returns>List</returns>
         public List<Recharge> getAllCustomerRecharges(Customer customer)
         {
             try
@@ -223,7 +225,7 @@ namespace DataTier
         /// insert the initial customer's balance
         /// </summary>
         /// <param name="cusPhone"></param>
-        /// <returns></returns>
+        /// <returns>int</returns>
         public int customerPhoneBalance(CustomerPhone cusPhone)
         {
             int res = 0;
@@ -250,34 +252,10 @@ namespace DataTier
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="phonenumber"></param>
-        /// <param name="balance"></param>
-        /// <returns></returns>
-        public int updBalance(int id, string phonenumber, decimal balance)
-        {
-            int res = 0;
-            try
-            {
-                var dbCtx = new CallMonitorModelEntities();
-                var NewBalance = dbCtx.CUSTOMER_PHONE.Where(c => c.Customer_Id == id && c.Phone_Number == phonenumber).FirstOrDefault();
-                NewBalance.Minute_Balance += balance;
-                res = dbCtx.SaveChanges();
-                return res;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        /// <summary>
         /// retrieve the actual customer's minutes balance 
         /// </summary>
         /// <param name="customer"></param>
-        /// <returns></returns>
+        /// <returns>CustomerPhone</returns>
         public CustomerPhone getBalance(int Id, string PhoneNumber)
         {
             try
@@ -297,10 +275,9 @@ namespace DataTier
         }
 
         /// <summary>
-        /// update the customer's minute balance
+        /// update the Customer Balance: CustomerPhone table
         /// </summary>
         /// <param name="cusPhone"></param>
-        /// <returns></returns>
         public void updBalance(CustomerPhone cusPhone)
         {
             try

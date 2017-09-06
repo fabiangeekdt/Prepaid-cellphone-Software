@@ -60,7 +60,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(cus);
                 var resp = ResponseCallService(json, "POST", "Register");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                txtResposeArea.Text = "Id Response: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
             }
             catch (Exception ex)
             {
@@ -158,44 +158,5 @@ namespace CellPhoneSimulator
                 throw new Exception("Oops... Something went wrong: \nException: " + ex.Message);
             }
         }
-
-        public static string StreamToString(Stream flujoDatos)
-        {
-            try
-            {
-                if (flujoDatos == null)
-                    return null;
-
-                if (flujoDatos.CanSeek && flujoDatos.Position != 0)
-                    flujoDatos.Position = 0;
-
-                StreamReader lectorFlujoDatos = new StreamReader(flujoDatos);
-
-                return lectorFlujoDatos.ReadToEnd();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }
-
-//byte[] data = UTF8Encoding.UTF8.GetBytes(postString);
-
-//HttpWebRequest request;
-//request = WebRequest.Create("http://localhost:54371/CallMonitorAPI.svc/Register") as HttpWebRequest;
-//request.Timeout = 10 * 1000;
-//request.Method = "POST";
-//request.ContentLength = data.Length;
-//request.ContentType = "text/plain; charset=utf-8";
-
-//Stream postStream = request.GetRequestStream();
-//postStream.Write(data, 0, data.Length);
-//var DataContractJsonSerializer = new DataContractJsonSerializer(typeof(Customer));
-//HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-////StreamReader reader = new StreamReader(response.GetResponseStream());
-////string body = reader.ReadToEnd();
-//var stream = response.GetResponseStream();
-//var userinfo = SerializationHelpers.DeserializeJson<Response>(stream);
-//txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;

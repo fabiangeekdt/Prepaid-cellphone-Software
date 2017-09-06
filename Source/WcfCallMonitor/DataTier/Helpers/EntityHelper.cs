@@ -1,9 +1,10 @@
 ﻿#region Authoring Description
 /* 
 * =================================================================================
-* Author:		Fabian Andres Moreno chacon
+* Author:		Fabian Andres Moreno Chacon
 * Create date:  Sept 3, 2017
-* Description:	
+* Description:	Entity helper class to convert all the database entities into 
+*               WCF Entities
 * =================================================================================
 * ============================= CHANGES ===========================================
 * Author:		
@@ -22,6 +23,11 @@ namespace DataTier.Helpers
 {
     public class EntityHelper
     {
+        /// <summary>
+        /// Method that convert a CustomerEntity(Database) into Customer
+        /// </summary>
+        /// <param name="customer">CustomerEntity</param>
+        /// <returns>Customer</returns>
         public Customer convertToEntity(CustomerEntity customer)
         {
             try
@@ -41,6 +47,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a CustomerPhoneEntity(Database) into CustomerPhone
+        /// </summary>
+        /// <param name="cus">CustomerPhoneEntity</param>
+        /// <returns>CustomerPhone</returns>
         public CustomerPhone convertToEntity(CustomerPhoneEntity cus)
         {
             try
@@ -58,6 +69,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a CallEntity(Database) into Call
+        /// </summary>
+        /// <param name="cEntity">CallEntity</param>
+        /// <returns>Call</returns>
         public Call convertToEntity(CallEntity cEntity)
         {
             try
@@ -80,6 +96,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a List<RechargeEntity>(Database) into List<Recharge>
+        /// </summary>
+        /// <param name="list">List<RechargeEntity></param>
+        /// <returns>List<Recharge></returns>
         public List<Recharge> convertToEntity(List<RechargeEntity> list)
         {
             try
@@ -104,6 +125,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a CustomerBonusEntity(Database) into CustomerBonus
+        /// </summary>
+        /// <param name="cusBonus">CustomerBonusEntity</param>
+        /// <returns>CustomerBonus</returns>
         public CustomerBonus convertToEntity(CustomerBonusEntity cusBonus)
         {
             try
@@ -121,6 +147,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a PriceEntity(Database) into Price
+        /// </summary>
+        /// <param name="price">PriceEntity</param>
+        /// <returns>Price</returns>
         public Price convertToEntity(PriceEntity price)
         {
             try
@@ -137,6 +168,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a MinimunRechargeEntity(Database) into MinimunRecharge
+        /// </summary>
+        /// <param name="minR">MinimunRechargeEntity</param>
+        /// <returns>MinimunRecharge</returns>
         public MinimunRecharge convertToEntity(MinimunRechargeEntity minR)
         {
             try
@@ -153,6 +189,11 @@ namespace DataTier.Helpers
             }
         }
 
+        /// <summary>
+        /// Method that convert a List<PromotionEntity>(Database) into List<Promotion>
+        /// </summary>
+        /// <param name="list">List<PromotionEntity></param>
+        /// <returns>List<Promotion></returns>
         public List<Promotion> convertToEntity(List<PromotionEntity> list)
         {
             try
@@ -175,7 +216,12 @@ namespace DataTier.Helpers
             }
         }
 
-        internal List<CustomerBonus> convertToEntity(IQueryable<CustomerBonusEntity> queryable)
+        /// <summary>
+        /// Method that convert a IQueryable<CustomerBonusEntity>(Database) into List<CustomerBonus>
+        /// </summary>
+        /// <param name="queryable">IQueryable<CustomerBonusEntity></param>
+        /// <returns>List<CustomerBonus></returns>
+        public List<CustomerBonus> convertToEntity(IQueryable<CustomerBonusEntity> queryable)
         {
             try
             {
