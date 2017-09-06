@@ -8,12 +8,13 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Data;
+using System.Configuration;
 
 namespace CellPhoneSimulator
 {
     public partial class Cellphone_Client : Form
     {
-        public const string url = "http://localhost:54371/CallMonitorAPI.svc"; 
+        public string url = ConfigurationManager.AppSettings["Serviceurl"].ToString();
         public Cellphone_Client()
         {
             InitializeComponent();
@@ -123,10 +124,15 @@ namespace CellPhoneSimulator
             try
             {
                 var call = new Call { PhoneNumber = txtCallFromNumber.Text, DestinationNumber = txtCallToPhoneNumber.Text };
-                var json = SerializationHelpers.SerializeJson(call);
-                var resp = ResponseCallService(json, "POST", "StartPhoneCall");
-                var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtCallResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                if(call.PhoneNumber != call.DestinationNumber)
+                {
+                    var json = SerializationHelpers.SerializeJson(call);
+                    var resp = ResponseCallService(json, "POST", "StartPhoneCall");
+                    var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
+                    txtCallResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                }
+                else
+                    txtCallResponse.Text = "Origin Phone Number and Destination Phone Number cannot be the same.";
             }
             catch (Exception ex)
             {

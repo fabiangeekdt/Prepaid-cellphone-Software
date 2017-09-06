@@ -67,12 +67,27 @@ namespace BusinessTier.Transactions
                 transValidations.validateCustomerSubscription(cus);
 
                 cusPhone = dataAccess.getBalance(cus.Id, cus.PhoneNumber);
-                transValidations.validateMinLeft(cusPhone.MinuteBalance);
+                if (cusPhone != null)
+                {
+                    if (!transValidations.validateMinLeft(cusPhone.MinuteBalance)) { 
+                        resp.idResponse = 0;
+                        resp.response = "Customer does not have minutes for making this call.";
+                        resp.exception = null;
+                        return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
+                    }
+                }
+                else
+                {
+                    resp.idResponse = 0;
+                    resp.response = "Customer does not have minutes for making this call.";
+                    resp.exception = null;
+                    return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
+                }
 
                 Price p = dataAccess.getPrice(Convert.ToInt32(2));
 
                 //Call simulation
-                var makecall = new CallSimulatorProxy();
+                var makecall = new CallSimulatorMock();
                 var callreq = new CallSimulatorRequest { toPhoneNumber = cus.PhoneNumber, fromPhoneNumber = call.DestinationNumber, startCall = DateTime.Now, minutesLet = cusPhone.MinuteBalance };
                 var callresp = new CallSimulatorResponse();
                 callresp = makecall.StartPhoneCall(callreq);

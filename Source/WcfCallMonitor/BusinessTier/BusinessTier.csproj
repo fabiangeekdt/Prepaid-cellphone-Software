@@ -46,7 +46,7 @@
     <Compile Include="Interfaces\ITransactionFactory.cs" />
     <Compile Include="Operations\BussinessOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Call.Simulator.Mock\CallSimulatorProxy.cs" />
+    <Compile Include="Services\Call.Simulator.Mock\CallSimulatorMock.cs" />
     <Compile Include="Services\Call.Simulator.Mock\Entity\CallSimulatorRequest.cs" />
     <Compile Include="Services\Call.Simulator.Mock\Entity\CallSimulatorResponse.cs" />
     <Compile Include="Transactions\PhoneTransactions.cs" />

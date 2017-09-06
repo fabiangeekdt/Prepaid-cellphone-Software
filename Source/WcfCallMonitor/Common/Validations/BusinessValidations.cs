@@ -107,10 +107,12 @@ namespace Common.Validations
         /// Validate if the customer has minutes left for making the call.
         /// </summary>
         /// <param name="MinuteBalance">actual customer's balance.</param>
-        public void validateMinLeft(decimal MinuteBalance)
+        public bool validateMinLeft(decimal MinuteBalance)
         {
             if (MinuteBalance == 0)
-                throw new Exception("Customer has not balance to do this call.");
+                return false;
+            else
+                return true;
         }
     }
 }

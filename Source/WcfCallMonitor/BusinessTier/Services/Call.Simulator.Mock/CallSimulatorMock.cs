@@ -19,9 +19,9 @@ using System.Linq;
 
 namespace BusinessTier.Services.Call.Simulator.Mock
 {
-    public class CallSimulatorProxy
+    public class CallSimulatorMock
     {
-        public CallSimulatorProxy()
+        public CallSimulatorMock()
         {
         }
 
