@@ -37,12 +37,10 @@ namespace BusinessTier.Factory
                     return new SubscribeCustomer(data).subscribe();
                 case "rechargePhoneNumber":
                     return new PhoneTransactions().rechargePhoneNumber(data);
-                //case "startPhoneCall":
-                //    return new PhoneCall().startPhoneCall(data);
-                //case "endPhoneCall":
-                //    return new PhoneCall().endPhoneCall(data);
-                //case "getPhoneBalance":
-                //    return new PhoneTransactions().getPhoneBalance(data);
+                case "startPhoneCall":
+                    return new PhoneCall().startPhoneCall(data);
+                case "getPhoneBalance":
+                    return new PhoneTransactions().getPhoneBalance(data);
                 case "getPricePerMinute":
                     return new RequestPrice().GetPrice(data);
                 default:

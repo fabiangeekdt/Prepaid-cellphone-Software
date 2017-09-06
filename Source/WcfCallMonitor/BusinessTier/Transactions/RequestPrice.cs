@@ -38,10 +38,15 @@ namespace BusinessTier.Transactions
                 Price price = SerializationHelpers.DeserializeJson<Price>(idPrice);
                 Price p = dataAccess.getPrice(Convert.ToInt32(price.Id));
                 if (p != null)
-                    return SerializationHelpers.SerializeJson(p);
+                { 
+                    resp.idResponse = 0;
+                    resp.response = p.Description + " " + p.Prices.ToString();
+                    resp.exception = null;
+                    return SerializationHelpers.SerializeJson(resp);
+                }
                 else
                 {
-                    resp.idResponse = 0;
+                    resp.idResponse = 1;
                     resp.response = "Id Price does not exist";
                     resp.exception = null;
                     return SerializationHelpers.SerializeJson(resp);

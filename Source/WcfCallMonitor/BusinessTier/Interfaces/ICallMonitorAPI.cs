@@ -37,29 +37,19 @@ namespace BusinessTier.Interfaces
             UriTemplate = "Recharge")]
         string rechargePhoneNumber(Stream RechargePhone);
 
-        //[OperationContract]
-        //[WebInvoke(Method = "POST",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Wrapped,
-        //    UriTemplate = "/StartPhoneCall")]
-        //string startPhoneCall(string Start);
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "/StartPhoneCall")]
+        string startPhoneCall(Stream Start);
 
-        //[OperationContract]
-        //[WebInvoke(Method = "POST",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Wrapped,
-        //    UriTemplate = "/EndPhoneCall")]
-        //string endPhoneCall(string End);
-
-        //[OperationContract]
-        //[WebInvoke(Method = "POST",
-        //    RequestFormat = WebMessageFormat.Json,
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Wrapped,
-        //    UriTemplate = "/GetPhoneBalance")]
-        //string getPhoneBalance(string CustomerBalance);
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "GetPhoneBalance")]
+        string getPhoneBalance(Stream CustomerBalance);
 
         [OperationContract]
         [WebInvoke(Method = "POST",

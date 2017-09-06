@@ -16,6 +16,7 @@ using Common.Entities;
 using Common.Enum;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataTier.Helpers
 {
@@ -101,7 +102,6 @@ namespace DataTier.Helpers
             {
                 throw ex;
             }
-            throw new NotImplementedException();
         }
 
         public CustomerBonus convertToEntity(CustomerBonusEntity cusBonus)
@@ -168,6 +168,29 @@ namespace DataTier.Helpers
                     lpro.Add(pro);
                 }
                 return lpro;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        internal List<CustomerBonus> convertToEntity(IQueryable<CustomerBonusEntity> queryable)
+        {
+            try
+            {
+                List<CustomerBonus> lcusb = new List<CustomerBonus>();
+                foreach (var item in queryable)
+                {
+                    var cusBonus = new CustomerBonus();
+                    cusBonus.ActivationDay = item.Activation_day;
+                    cusBonus.BonusCode = item.Bonus_Code;
+                    cusBonus.Id = item.Customer_Id;
+                    cusBonus.PhoneNumber = item.Phone_Number;
+                    cusBonus.PromotionId = item.Promotion_Id;
+                    lcusb.Add(cusBonus);
+                }
+                return lcusb;
             }
             catch (Exception ex)
             {

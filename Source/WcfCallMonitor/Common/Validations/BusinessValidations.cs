@@ -24,7 +24,7 @@ namespace Common.Validations
         /// 
         /// </summary>
         /// <returns></returns>
-        public void validateCustomerSubscription(Customer cus)
+        public void validateCustomerSubscription(object cus)
         {
             if (cus == null)
                 throw new Exception("Customer is not Subscribed.");
@@ -46,7 +46,7 @@ namespace Common.Validations
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Validation bonus error: " + ex.Message);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Common.Validations
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Validtion Average error: " + ex.Message);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Common.Validations
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Validtion Minimun Recharges error: " + ex.Message);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Common.Validations
         /// <returns></returns>
         public void validateMinLeft(decimal MinuteBalance)
         {
-            if (MinuteBalance < 0)
+            if (MinuteBalance == 0)
                 throw new Exception("Customer has not balance to do this call.");
         }
     }

@@ -11,6 +11,6 @@ namespace BusinessTier.Services.Call.Simulator.Proxy.Entity
         public string fromPhoneNumber { get; set; }
         public string toPhoneNumber { get; set; }
         public DateTime startCall { get; set; }
-        public int minutesLet { get; set; }
+        public decimal minutesLet { get; set; }
     }
 }

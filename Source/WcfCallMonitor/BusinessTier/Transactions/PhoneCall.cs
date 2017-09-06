@@ -48,68 +48,63 @@ namespace BusinessTier.Transactions
             transValidations = new BusinessValidations();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public string startPhoneCall(Stream data)
         {
             try
             {
-                //primero valido si el cliente existe
-                    //segundo valido si el cliente tiene saldo
-                        //si el cliente tiene saldo, se hacen las validaciones de los bonuses
-                                //se hace la llamada
-                                // se crea una variable de sesion de equipo para que guarde el tiempo de llamada:se cuenta el tiempo de inicio de llamada - inicio de llamada + el tiempo disponible
-                                    // si el saldo se termina se cuelga la llamada
-                                        //se guarda el saldo cero en la base de datos 
-                                        //se envia mensaje indicando que se acabo el saldo
-                                    // si el cliente cuelga
-                                        //se calcula el saldo sobrante
-                                        //se guarda el estado, costo y duracion de la llamada.
-                    //si no tiene saldo se envia mensaje que la llamada no puede hacerse
-                //Si no existe si termina la llamada
-                //fin 
                 call = SerializationHelpers.DeserializeJson<Call>(data);
 
-                cus = dataAccess.getCustomerPerPhone(call.Id_Type, call.Id, call.PhoneNumber);
+                cus = dataAccess.getCustomerPerPhone(call.PhoneNumber);
                 transValidations.validateCustomerSubscription(cus);
 
                 cusPhone = dataAccess.getBalance(cus.Id, cus.PhoneNumber);
                 transValidations.validateMinLeft(cusPhone.MinuteBalance);
 
+                Price p = dataAccess.getPrice(Convert.ToInt32(2));
+
+                //Call simulation
                 var makecall = new CallSimulatorProxy();
-                //makecall.StartPhoneCall();
+                var callreq = new CallSimulatorRequest { toPhoneNumber = cus.PhoneNumber, fromPhoneNumber = call.DestinationNumber, startCall = DateTime.Now, minutesLet = cusPhone.MinuteBalance };
+                var callresp = new CallSimulatorResponse();
+                callresp = makecall.StartPhoneCall(callreq);
+                decimal callLast = 0;
+                TimeSpan duCall = callresp.endCall - callresp.startCall;
+                if(Convert.ToDecimal(duCall.TotalSeconds) >= (cusPhone.MinuteBalance * 60))
+                {
+                    callLast = cusPhone.MinuteBalance;
+                    cusPhone.MinuteBalance = 0;
+                    cusPhone.MinutesUsed = callLast;
+                    dataAccess.updBalance(cusPhone);
+                }
+                else
+                {
+                    callLast = Convert.ToDecimal(duCall.TotalSeconds);
+                    cusPhone.MinuteBalance -= callLast / 60; 
+                    cusPhone.MinutesUsed += callLast / 60;
+                    dataAccess.updBalance(cusPhone);                 
+                }
+                var callCost = callLast * p.Prices;
+                var c = new Call { Id = cus.Id, PhoneNumber = cus.PhoneNumber, DestinationNumber = call.DestinationNumber, InitialDatetime = callresp.startCall, FinalDatetime = callresp.endCall, Duration = callLast, Cost = callCost, State = callresp.answerType };
+                var res = dataAccess.initPhoneCall(c);
 
-
-
-                makePhoneCall();
-                return string.Empty;
+                resp.idResponse = 0;
+                resp.response = "From Phone Number: " + cus.PhoneNumber + " \nTo from Phone Number: " + call.DestinationNumber + " \nStart Call DateTime: " +c.InitialDatetime.ToString() + " \nEndCall DateTime : " + c.FinalDatetime.ToString() + 
+                                " \nCall Duration: " + c.Duration.ToString() + "sec. \n Call Cost: " + c.Cost + " \n Call State: " + callresp.answerDesc;
+                resp.exception = null;
+                return SerializationHelpers.SerializeJson<Response>(resp);
             }
             catch (Exception ex)
             {
-                //guardar el estado de la llamada.3   UnReachable
-                resp.idResponse = 444;
-                resp.response = ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
+                resp.idResponse = 400;
+                resp.response = "Cannot finalize transaction: PhoneCall";
                 resp.exception = ex;
                 return SerializationHelpers.SerializeJson<Response>(resp);
             }
-        }
-
-
-        private void makePhoneCall()
-        {
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            throw new NotImplementedException();
-        }
-
-        public string endPhoneCall(string data)
-        {
-            throw new NotImplementedException();
         }
     }
 }

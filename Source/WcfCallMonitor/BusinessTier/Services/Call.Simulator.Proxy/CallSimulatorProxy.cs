@@ -9,12 +9,15 @@ namespace BusinessTier.Services.Call.Simulator.Proxy
     {
         public CallSimulatorProxy()
         {
-           
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="call"></param>
+        /// <returns></returns>
         public CallSimulatorResponse  StartPhoneCall(CallSimulatorRequest call)
         {
-
             try
             {
                 var response = new CallSimulatorResponse();
@@ -27,6 +30,11 @@ namespace BusinessTier.Services.Call.Simulator.Proxy
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         private CallSimulatorResponse Phonecall(CallSimulatorRequest e)
         {
             try
@@ -41,13 +49,12 @@ namespace BusinessTier.Services.Call.Simulator.Proxy
 
                 Random c = new Random();
                 h = c.Next(answer.Min(a => a.Value), answer.Max(a => a.Value));
-
+                var endc = e.startCall.AddMinutes(c.Next(1, 20));
                 switch (h)
                 {
                     case 0:
-                        h = c.Next(1, 4);
                         response.startCall = e.startCall;
-                        response.endCall = DateTime.Now.AddMinutes(h);
+                        response.endCall = endc;
                         response.answerType = h;
                         response.answerDesc = answer.FirstOrDefault(k => k.Value == h).Key;
                         break;
@@ -59,7 +66,7 @@ namespace BusinessTier.Services.Call.Simulator.Proxy
                         break;
                     case 2:
                         response.startCall = e.startCall;
-                        response.endCall = DateTime.Now.AddMinutes(h);
+                        response.endCall = endc;
                         response.answerType = h;
                         response.answerDesc = answer.FirstOrDefault(k => k.Value == h).Key;
                         break;

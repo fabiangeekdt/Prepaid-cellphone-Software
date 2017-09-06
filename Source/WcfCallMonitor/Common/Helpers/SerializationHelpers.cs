@@ -25,17 +25,36 @@ namespace Common.Helpers
 {
     public class SerializationHelpers
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string SerializeXml<T>(T obj)
         {
-            using (var ms = new MemoryStream())
+            try
             {
-                var serializer = new DataContractSerializer(typeof(T));
-                serializer.WriteObject(ms, obj);
-                string retVal = Encoding.Default.GetString(ms.ToArray());
-                return retVal;
+                using (var ms = new MemoryStream())
+                {
+                    var serializer = new DataContractSerializer(typeof(T));
+                    serializer.WriteObject(ms, obj);
+                    string retVal = Encoding.Default.GetString(ms.ToArray());
+                    return retVal;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpException(400, "Bad Request: ", ex);
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xml"></param>
+        /// <returns></returns>
         public static T DeserializeXml<T>(string xml)
         {
             try
@@ -56,6 +75,12 @@ namespace Common.Helpers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string SerializeJson<T>(T obj)
         {
             try
@@ -69,10 +94,16 @@ namespace Common.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new HttpException(400, "Bad Request: ", ex);
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
         public static T DeserializeJson<T>(Stream jsonString)
         {
             try

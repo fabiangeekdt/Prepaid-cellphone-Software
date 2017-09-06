@@ -58,7 +58,7 @@ namespace BusinessTier.Transactions
             catch (Exception ex)
             {
                 resp.idResponse = 400;
-                resp.response = "Cannot subscribed customer.";
+                resp.response = "Cannot finalize transaction: subscribe.";
                 resp.exception = ex;
                 return SerializationHelpers.SerializeJson<Response>(resp);
             }

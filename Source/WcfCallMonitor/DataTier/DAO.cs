@@ -18,7 +18,6 @@ using System.Linq;
 using Common.Entities;
 using System.Collections.Generic;
 using DataTier.Helpers;
-using System.Data.Entity.Validation;
 
 namespace DataTier
 {
@@ -66,14 +65,33 @@ namespace DataTier
         /// </summary>
         /// <param name="Customer"></param>
         /// <returns></returns>
-        public Customer getCustomerPerPhone(int Id_Type, int Id, string PhoneNumber)
+        public Customer getCustomerPerPhone(int Id, string PhoneNumber)
         {
             try
             {
                 var dbCtx = new CallMonitorModelEntities();
-                return eHelper.convertToEntity(dbCtx.CUSTOMER.Where(c => c.Id_Type == Id_Type &&
-                                                c.Id == Id &&
-                                                c.Phone_Number == PhoneNumber).FirstOrDefault());
+                var cus = dbCtx.CUSTOMER.Where(c => c.Id == Id &&
+                                                c.Phone_Number == PhoneNumber).FirstOrDefault();
+                return eHelper.convertToEntity(cus);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// retrive the information of the customer by type id, id and phone number
+        /// </summary>
+        /// <param name="Customer"></param>
+        /// <returns></returns>
+        public Customer getCustomerPerPhone(string PhoneNumber)
+        {
+            try
+            {
+                var dbCtx = new CallMonitorModelEntities();
+                var cus = dbCtx.CUSTOMER.Where(c => c.Phone_Number == PhoneNumber).FirstOrDefault();
+                return eHelper.convertToEntity(cus);
             }
             catch (Exception ex)
             {
@@ -113,32 +131,6 @@ namespace DataTier
             {
                 throw ex;
             }
-        }
-
-        /// <summary>
-        /// finish the phone call made by the customer
-        /// </summary>
-        /// <param name="call"></param>
-        /// <returns></returns>
-        public int endPhoneCall(Call call)  
-        {
-            try
-            {
-                var dbCtx = new CallMonitorModelEntities();
-                CallEntity cuscall = dbCtx.CALL.Where(c => c.Customer_id == call.Id &&
-                                                        c.Phone_Number == call.PhoneNumber).FirstOrDefault();
-
-                cuscall.Final_DateTime = call.FinalDatetime;
-                cuscall.Call_Duration = call.Duration;
-                cuscall.Call_Cost = call.CallId;
-                cuscall.Call_State = call.State;
-                return dbCtx.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -258,6 +250,30 @@ namespace DataTier
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="phonenumber"></param>
+        /// <param name="balance"></param>
+        /// <returns></returns>
+        public int updBalance(int id, string phonenumber, decimal balance)
+        {
+            int res = 0;
+            try
+            {
+                var dbCtx = new CallMonitorModelEntities();
+                var NewBalance = dbCtx.CUSTOMER_PHONE.Where(c => c.Customer_Id == id && c.Phone_Number == phonenumber).FirstOrDefault();
+                NewBalance.Minute_Balance += balance;
+                res = dbCtx.SaveChanges();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
         /// retrieve the actual customer's minutes balance 
         /// </summary>
         /// <param name="customer"></param>
@@ -267,9 +283,12 @@ namespace DataTier
             try
             {
                 var dbCtx = new CallMonitorModelEntities();
-                var entityHelper = new EntityHelper();
-                return entityHelper.convertToEntity(dbCtx.CUSTOMER_PHONE.Where(c => c.Customer_Id == Id &&
-                                                    c.Phone_Number == PhoneNumber).FirstOrDefault());
+                var bal = dbCtx.CUSTOMER_PHONE.Where(c => c.Customer_Id == Id &&
+                                                    c.Phone_Number == PhoneNumber).FirstOrDefault();
+                if (bal != null)
+                    return eHelper.convertToEntity(bal);
+                else
+                    return null;
             }
             catch (Exception ex)
             {
@@ -282,17 +301,21 @@ namespace DataTier
         /// </summary>
         /// <param name="cusPhone"></param>
         /// <returns></returns>
-        public int updBalance(CustomerPhone cusPhone)
+        public void updBalance(CustomerPhone cusPhone)
         {
             try
             {
                 var dbCtx = new CallMonitorModelEntities();
                 CustomerPhoneEntity cPhone = dbCtx.CUSTOMER_PHONE.Where(c => c.Customer_Id == cusPhone.Id &&
                                                     c.Phone_Number == cusPhone.PhoneNumber).FirstOrDefault();
-
+                cPhone.Minute_Balance = cusPhone.MinuteBalance;
                 cPhone.Minutes_Use = cusPhone.MinutesUsed;
-                cusPhone.MinuteBalance = cusPhone.MinuteBalance;
-                return dbCtx.SaveChanges();
+
+                using (dbCtx)
+                {
+                    dbCtx.Entry(cPhone).State = System.Data.EntityState.Modified;
+                    dbCtx.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -334,13 +357,16 @@ namespace DataTier
         /// </summary>
         /// <param name="cusBonus"></param>
         /// <returns></returns>
-        public CustomerBonus getLastCustomerBonus(int Id, string PhoneNumber)
+        public List<CustomerBonus> getLastCustomerBonus(int Id, string PhoneNumber)
         {
             try
             {
                 var dbCtx = new CallMonitorModelEntities();
-                return eHelper.convertToEntity(dbCtx.CUSTOMER_BONUS.Where(c => c.Customer_Id == Id &&
-                                                    c.Phone_Number == PhoneNumber).OrderByDescending(c => c.Activation_day).First());
+                return eHelper.convertToEntity(dbCtx.CUSTOMER_BONUS.Where(c => c.Customer_Id == Id && c.Phone_Number == PhoneNumber));
+                //if (cusBonus != null)
+                //    return eHelper.convertToEntity(cusBonus);
+                //else
+                //    return null;
             }
             catch (Exception ex)
             {

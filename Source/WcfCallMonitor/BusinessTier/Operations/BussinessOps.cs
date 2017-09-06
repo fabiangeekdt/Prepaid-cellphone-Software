@@ -25,36 +25,12 @@ namespace BusinessTier.Operations
 {
     public static class BussinessOps
     {
-        public static decimal averageRechargeValue(Customer customer)
-        {
-            try
-            {
-                DAO data = new DAO();
-                List<Recharge> re = new List<Recharge>();
-                re = data.getAllCustomerRecharges(customer);
-                decimal rechargesSum = re.Sum(c => c.Value);
-                return rechargesSum / re.Count();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static decimal minRechargeValue(Customer customer)
-        {
-            try
-            {
-                DAO data = new DAO();
-                Recharge re = new Recharge();
-                return data.getAllCustomerRecharges(customer).Where(c => c.Date < DateTime.Today.AddDays(-7)).FirstOrDefault().Value;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="call"></param>
+        /// <param name="cusPhone"></param>
+        /// <returns></returns>
         public static int callCountDown(Call call, CustomerPhone cusPhone)
         {
             try
@@ -67,17 +43,29 @@ namespace BusinessTier.Operations
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="avg"></param>
+        /// <param name="ptype"></param>
+        /// <param name="promValue"></param>
+        /// <returns></returns>
         public static decimal calculateBonus(decimal avg, PromotionType ptype, int promValue)
         {
-            switch (ptype)
+            try
             {
-                case PromotionType.Percentaje:
-                    return avg * (promValue / 100);
-                default:
-                    return 0;
+                switch (ptype)
+                {
+                    case PromotionType.Percentaje:
+                        return (avg * promValue) / 100;
+                    default:
+                        return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("calculateBonus error: " + ex.Message);
             }
         }
-
     }
 }

@@ -7,80 +7,173 @@ using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Data;
 
 namespace CellPhoneSimulator
 {
-    public partial class Form1 : Form
+    public partial class Cellphone_Client : Form
     {
-        public Form1()
+        public const string url = "http://localhost:54371/CallMonitorAPI.svc"; 
+        public Cellphone_Client()
         {
             InitializeComponent();
+            loadItems();
         }
 
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        private void loadItems()
         {
+            txtPriceDate.Text = DateTime.Now.ToString();
+            txtReDate.Text = DateTime.Now.ToString();
 
+            DataTable dtID = new DataTable();
+            dtID.Columns.Add("Code", typeof(int));
+            dtID.Columns.Add("Description", typeof(string));
+            dtID.Rows.Add(1, "Cedula");
+            dtID.Rows.Add(2, "Another");
+            cbtypeId.DataSource = dtID;
+            cbtypeId.DisplayMember = "Description";
+            cbtypeId.ValueMember = "Code";
+
+            DataTable dtprice = new DataTable();
+            dtprice.Columns.Add("Code", typeof(int));
+            dtprice.Columns.Add("Description", typeof(string));
+            dtprice.Rows.Add(1, "Minute Price");
+            dtprice.Rows.Add(2, "Second Price");
+            cbPrice.DataSource = dtprice;
+            cbPrice.DisplayMember = "Description";
+            cbPrice.ValueMember = "Code";
         }
 
         private void btnSubscribe_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Customer cus = new Customer
+                {
+                    Id = Convert.ToInt32(txtid.Text),
+                    Id_Type = Convert.ToInt32(cbtypeId.SelectedValue),
+                    FirstName = txtfName.Text,
+                    PhoneNumber = txtPhone.Text,
+                    SecondName = txtsName.Text,
+                    LastName = txtlName.Text
+                };
+                var json = SerializationHelpers.SerializeJson(cus);
+                var resp = ResponseCallService(json, "POST", "Register");
+                var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
+                txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+            }
+            catch (Exception ex)
+            {
+                txtResposeArea.Text = "Oops... Something went wrong: \nException: " + ex.Message;
+            }
+        }
 
-            //Recharge r = new Recharge { Id = 1284641, PhoneNumber = "3141234567", Value = 10000, Date = DateTime.Now, State = 0 };
-            //var json1 = SerializationHelpers.SerializeJson(r);
-            //Price p = new Price { Id = 1, Description = "", Prices = 0 };
-            //var json = SerializationHelpers.SerializeJson(p);
+        private void btnRecharge_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Recharge r = new Recharge { Id = Convert.ToInt32(txtReId.Text), PhoneNumber = txtRePnumber.Text, Value = Convert.ToDecimal(txtReValue.Text), Date = Convert.ToDateTime(txtReDate.Text), State = 1 };
+                var json = SerializationHelpers.SerializeJson(r);
+                var resp = ResponseCallService(json, "POST", "Recharge");
+                var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
+                txtReResponse.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+            }
+            catch (Exception ex)
+            {
+                txtReResponse.Text = "Oops... Something went wrong: \nException: " + ex.Message;
+            }
+        }
 
-            Customer cus = new Customer();
-            cus.Id = Convert.ToInt32(txtid.Text);
-            cus.Id_Type = 1;
-            cus.FirstName = txtfName.Text;
-            cus.PhoneNumber = txtPhone.Text;
-            cus.SecondName = txtsName.Text;
-            cus.LastName = txtlName.Text;
+        private void btnPrice_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Price p = new Price { Id = Convert.ToInt32(cbPrice.SelectedValue), Description = "", Prices = 0 };
+                var json = SerializationHelpers.SerializeJson(p);
+                var resp = ResponseCallService(json, "POST", "getPricePerMinute");
+                var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
+                txtPrResponse.Text = "Price: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+            }
+            catch (Exception ex)
+            {
+                txtPrResponse.Text = "Oops... Something went wrong: \nException: " + ex.Message; 
+            }
+        }
 
-            var postString = SerializationHelpers.SerializeJson(cus);
-            byte[] data = UTF8Encoding.UTF8.GetBytes(postString);
+        private void btnBalance_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var cusp = new CustomerPhone { Id = Convert.ToInt32(txtBalId.Text), PhoneNumber = txtBalPnumber.Text };
+                var json = SerializationHelpers.SerializeJson(cusp);
+                var resp = ResponseCallService(json, "POST", "GetPhoneBalance");
+                var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
+                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+            }
+            catch (Exception ex)
+            {
+                txtBalResponse.Text = "Oops... Something went wrong: \nException: " + ex.Message;
+            }
+        }
 
-            HttpWebRequest request;
-            request = WebRequest.Create("http://localhost:54371/CallMonitorAPI.svc/Register") as HttpWebRequest;
-            request.Timeout = 10 * 1000;
-            request.Method = "POST";
-            request.ContentLength = data.Length;
-            request.ContentType = "text/plain; charset=utf-8";
+        private void btnCall_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var call = new Call { PhoneNumber = txtCallFromNumber.Text, DestinationNumber = txtCallToPhoneNumber.Text };
+                var json = SerializationHelpers.SerializeJson(call);
+                var resp = ResponseCallService(json, "POST", "StartPhoneCall");
+                var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
+                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+            }
+            catch (Exception ex)
+            {
+                txtCallResponse.Text = "Oops... Something went wrong: \nException: " + ex.Message;
+            }
+        }
 
-            Stream postStream = request.GetRequestStream();
-            postStream.Write(data, 0, data.Length);
-            var DataContractJsonSerializer = new DataContractJsonSerializer(typeof(Customer));
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            //StreamReader reader = new StreamReader(response.GetResponseStream());
-            //string body = reader.ReadToEnd();
-            var stream = response.GetResponseStream();
-            var userinfo = SerializationHelpers.DeserializeJson<Response>(stream);
-            txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+        private Stream ResponseCallService(string servicedata, string method, string transaction)
+        {
+            try
+            {
+                byte[] data = UTF8Encoding.UTF8.GetBytes(servicedata);
 
+                HttpWebRequest request;
+                request = WebRequest.Create(url + "/" +  transaction) as HttpWebRequest;
+                request.Timeout = 100 * 1000;
+                request.Method = method; // "POST";
+                request.ContentLength = data.Length;
+                request.ContentType = "text/plain; charset=utf-8";
 
-            //var request = (HttpWebRequest)WebRequest.Create(string.Format("http://localhost:54371/CallMonitorAPI.svc/Register"));
-            //var body = "";
-
-            //request.Method = "GET";
-            //request.ContentType = @"text/plain; charset=uf-8";
-
-            //var DataContractJsonSerializer = new DataContractJsonSerializer(typeof(Customer));
-            //using (var memoryStream = new MemoryStream())
-            //using (var reader = new StreamReader(memoryStream))
-            //{
-            //    DataContractJsonSerializer.WriteObject(memoryStream, cus);
-            //    memoryStream.Position = 0;
-            //    body = reader.ReadToEnd();
-            //}
-            //using (var streaWriter = new StreamWriter(request.GetRequestStream()))
-            //{
-            //    streaWriter.Write(body);
-            //}
-            //var response = (HttpWebResponse)request.GetResponse();
-            //var stream = response.GetResponseStream();
-            //var userinfo = (Response)DataContractJsonSerializer.ReadObject(stream);
-            //txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+                Stream postStream = request.GetRequestStream();
+                postStream.Write(data, 0, data.Length);
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                var stream = response.GetResponseStream();
+                return stream;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Oops... Something went wrong: \nException: " + ex.Message);
+            }
         }
     }
 }
+
+//byte[] data = UTF8Encoding.UTF8.GetBytes(postString);
+
+//HttpWebRequest request;
+//request = WebRequest.Create("http://localhost:54371/CallMonitorAPI.svc/Register") as HttpWebRequest;
+//request.Timeout = 10 * 1000;
+//request.Method = "POST";
+//request.ContentLength = data.Length;
+//request.ContentType = "text/plain; charset=utf-8";
+
+//Stream postStream = request.GetRequestStream();
+//postStream.Write(data, 0, data.Length);
+//var DataContractJsonSerializer = new DataContractJsonSerializer(typeof(Customer));
+//HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+////StreamReader reader = new StreamReader(response.GetResponseStream());
+////string body = reader.ReadToEnd();
+//var stream = response.GetResponseStream();
+//var userinfo = SerializationHelpers.DeserializeJson<Response>(stream);
+//txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
