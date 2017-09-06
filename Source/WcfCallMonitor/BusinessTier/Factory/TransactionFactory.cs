@@ -26,7 +26,7 @@ namespace BusinessTier.Factory
         /// <param name="transType"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public string getTransaction(string transType, Stream data)
+        public Stream getTransaction(string transType, Stream data)
         {
             if (transType == null)
                 return null;
@@ -44,7 +44,7 @@ namespace BusinessTier.Factory
                 case "getPricePerMinute":
                     return new RequestPrice().GetPrice(data);
                 default:
-                    return string.Empty;
+                    return null;
             }
         }
     }

@@ -53,7 +53,7 @@ namespace BusinessTier.Transactions
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public string startPhoneCall(Stream data)
+        public Stream startPhoneCall(Stream data)
         {
             try
             {
@@ -96,14 +96,14 @@ namespace BusinessTier.Transactions
                 resp.response = "From Phone Number: " + cus.PhoneNumber + " \nTo from Phone Number: " + call.DestinationNumber + " \nStart Call DateTime: " +c.InitialDatetime.ToString() + " \nEndCall DateTime : " + c.FinalDatetime.ToString() + 
                                 " \nCall Duration: " + c.Duration.ToString() + "sec. \n Call Cost: " + c.Cost + " \n Call State: " + callresp.answerDesc;
                 resp.exception = null;
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
             catch (Exception ex)
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: PhoneCall";
                 resp.exception = ex;
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
     }

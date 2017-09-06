@@ -54,7 +54,7 @@ namespace BusinessTier.Transactions
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public string rechargePhoneNumber(Stream data)
+        public Stream rechargePhoneNumber(Stream data)
         {
             try
             {
@@ -85,14 +85,14 @@ namespace BusinessTier.Transactions
                     resp.response = "Recharged not complete";
                     resp.exception = null;
                 }
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
             catch (Exception ex)
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: rechargePhoneNumber, " + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
                 resp.exception = ex;
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
 
@@ -128,7 +128,7 @@ namespace BusinessTier.Transactions
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public string getPhoneBalance(Stream data)
+        public Stream getPhoneBalance(Stream data)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace BusinessTier.Transactions
                 if(res != null)
                 {
                     resp.idResponse = 0;
-                    resp.response = "Customer: " + cus.FirstName + " " + cus.SecondName + " " + cus.LastName + "\n Balance(min): " + res.MinuteBalance.ToString() + "\n Minutes left: " + res.MinutesUsed;
+                    resp.response = "Customer: " + cus.FirstName + " " + cus.SecondName + " " + cus.LastName + "\n Balance(min): " + res.MinuteBalance.ToString() + "\n Minutes used: " + res.MinutesUsed;
                     resp.exception = null;
                 }
                 else
@@ -149,14 +149,14 @@ namespace BusinessTier.Transactions
                     resp.response = "Cannot retrieve balance";
                     resp.exception = null;
                 }
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
             catch (Exception ex)
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: getPhoneBalance, " + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
                 resp.exception = ex;
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
 

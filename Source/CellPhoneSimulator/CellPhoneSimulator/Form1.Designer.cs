@@ -60,16 +60,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtReResponse = new System.Windows.Forms.TextBox();
-            this.tabCall = new System.Windows.Forms.TabPage();
-            this.tabPrice = new System.Windows.Forms.TabPage();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.cbPrice = new System.Windows.Forms.ComboBox();
-            this.btnPrice = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtPriceDate = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtPrResponse = new System.Windows.Forms.TextBox();
             this.tabBalance = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.btnBalance = new System.Windows.Forms.Button();
@@ -79,16 +69,24 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.txtBalResponse = new System.Windows.Forms.TextBox();
+            this.tabCall = new System.Windows.Forms.TabPage();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.btnCall = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
             this.txtCallFromNumber = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.txtCallToPhoneNumber = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.txtCallResponse = new System.Windows.Forms.TextBox();
+            this.tabPrice = new System.Windows.Forms.TabPage();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.cbPrice = new System.Windows.Forms.ComboBox();
+            this.btnPrice = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtPriceDate = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtPrResponse = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabSubscribe.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -100,21 +98,21 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tabCall.SuspendLayout();
-            this.tabPrice.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
             this.tabBalance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            this.tabCall.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
+            this.tabPrice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -442,6 +440,100 @@
             this.txtReResponse.Size = new System.Drawing.Size(280, 151);
             this.txtReResponse.TabIndex = 0;
             // 
+            // tabBalance
+            // 
+            this.tabBalance.Controls.Add(this.splitContainer4);
+            this.tabBalance.Location = new System.Drawing.Point(4, 22);
+            this.tabBalance.Name = "tabBalance";
+            this.tabBalance.Padding = new System.Windows.Forms.Padding(3);
+            this.tabBalance.Size = new System.Drawing.Size(684, 257);
+            this.tabBalance.TabIndex = 4;
+            this.tabBalance.Text = "Customer Balance";
+            this.tabBalance.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer4.Name = "splitContainer4";
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.btnBalance);
+            this.splitContainer4.Panel1.Controls.Add(this.txtBalPnumber);
+            this.splitContainer4.Panel1.Controls.Add(this.label16);
+            this.splitContainer4.Panel1.Controls.Add(this.txtBalId);
+            this.splitContainer4.Panel1.Controls.Add(this.label19);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.label20);
+            this.splitContainer4.Panel2.Controls.Add(this.txtBalResponse);
+            this.splitContainer4.Panel2.Cursor = System.Windows.Forms.Cursors.No;
+            this.splitContainer4.Size = new System.Drawing.Size(678, 251);
+            this.splitContainer4.SplitterDistance = 325;
+            this.splitContainer4.TabIndex = 18;
+            // 
+            // btnBalance
+            // 
+            this.btnBalance.Location = new System.Drawing.Point(116, 133);
+            this.btnBalance.Name = "btnBalance";
+            this.btnBalance.Size = new System.Drawing.Size(87, 23);
+            this.btnBalance.TabIndex = 15;
+            this.btnBalance.Text = "Get Balance";
+            this.btnBalance.UseVisualStyleBackColor = true;
+            this.btnBalance.Click += new System.EventHandler(this.btnBalance_Click);
+            // 
+            // txtBalPnumber
+            // 
+            this.txtBalPnumber.Location = new System.Drawing.Point(143, 71);
+            this.txtBalPnumber.Name = "txtBalPnumber";
+            this.txtBalPnumber.Size = new System.Drawing.Size(100, 20);
+            this.txtBalPnumber.TabIndex = 1;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(113, 100);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(19, 13);
+            this.label16.TabIndex = 8;
+            this.label16.Text = "Id:";
+            // 
+            // txtBalId
+            // 
+            this.txtBalId.Location = new System.Drawing.Point(143, 97);
+            this.txtBalId.Name = "txtBalId";
+            this.txtBalId.Size = new System.Drawing.Size(100, 20);
+            this.txtBalId.TabIndex = 2;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(51, 74);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(81, 13);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "Phone Number:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(125, 23);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(97, 13);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "Balance Response";
+            // 
+            // txtBalResponse
+            // 
+            this.txtBalResponse.Location = new System.Drawing.Point(36, 51);
+            this.txtBalResponse.Multiline = true;
+            this.txtBalResponse.Name = "txtBalResponse";
+            this.txtBalResponse.Size = new System.Drawing.Size(280, 151);
+            this.txtBalResponse.TabIndex = 0;
+            // 
             // tabCall
             // 
             this.tabCall.Controls.Add(this.splitContainer5);
@@ -452,6 +544,89 @@
             this.tabCall.TabIndex = 2;
             this.tabCall.Text = "Call";
             this.tabCall.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer5
+            // 
+            this.splitContainer5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer5.Name = "splitContainer5";
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.btnCall);
+            this.splitContainer5.Panel1.Controls.Add(this.txtCallFromNumber);
+            this.splitContainer5.Panel1.Controls.Add(this.txtCallToPhoneNumber);
+            this.splitContainer5.Panel1.Controls.Add(this.label21);
+            this.splitContainer5.Panel1.Controls.Add(this.label22);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.label23);
+            this.splitContainer5.Panel2.Controls.Add(this.txtCallResponse);
+            this.splitContainer5.Panel2.Cursor = System.Windows.Forms.Cursors.No;
+            this.splitContainer5.Size = new System.Drawing.Size(678, 251);
+            this.splitContainer5.SplitterDistance = 325;
+            this.splitContainer5.TabIndex = 18;
+            // 
+            // btnCall
+            // 
+            this.btnCall.Location = new System.Drawing.Point(102, 115);
+            this.btnCall.Name = "btnCall";
+            this.btnCall.Size = new System.Drawing.Size(87, 23);
+            this.btnCall.TabIndex = 15;
+            this.btnCall.Text = "Call";
+            this.btnCall.UseVisualStyleBackColor = true;
+            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
+            // 
+            // txtCallFromNumber
+            // 
+            this.txtCallFromNumber.Location = new System.Drawing.Point(144, 48);
+            this.txtCallFromNumber.Name = "txtCallFromNumber";
+            this.txtCallFromNumber.Size = new System.Drawing.Size(100, 20);
+            this.txtCallFromNumber.TabIndex = 1;
+            // 
+            // txtCallToPhoneNumber
+            // 
+            this.txtCallToPhoneNumber.Location = new System.Drawing.Point(144, 74);
+            this.txtCallToPhoneNumber.Name = "txtCallToPhoneNumber";
+            this.txtCallToPhoneNumber.Size = new System.Drawing.Size(100, 20);
+            this.txtCallToPhoneNumber.TabIndex = 3;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(36, 77);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(97, 13);
+            this.label21.TabIndex = 9;
+            this.label21.Text = "To Phone Number:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(26, 51);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(107, 13);
+            this.label22.TabIndex = 12;
+            this.label22.Text = "From Phone Number:";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(125, 23);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(75, 13);
+            this.label23.TabIndex = 16;
+            this.label23.Text = "Call Response";
+            // 
+            // txtCallResponse
+            // 
+            this.txtCallResponse.Location = new System.Drawing.Point(36, 51);
+            this.txtCallResponse.Multiline = true;
+            this.txtCallResponse.Name = "txtCallResponse";
+            this.txtCallResponse.Size = new System.Drawing.Size(280, 151);
+            this.txtCallResponse.TabIndex = 0;
             // 
             // tabPrice
             // 
@@ -552,202 +727,6 @@
             this.txtPrResponse.Size = new System.Drawing.Size(280, 151);
             this.txtPrResponse.TabIndex = 0;
             // 
-            // tabBalance
-            // 
-            this.tabBalance.Controls.Add(this.splitContainer4);
-            this.tabBalance.Location = new System.Drawing.Point(4, 22);
-            this.tabBalance.Name = "tabBalance";
-            this.tabBalance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBalance.Size = new System.Drawing.Size(684, 257);
-            this.tabBalance.TabIndex = 4;
-            this.tabBalance.Text = "Customer Balance";
-            this.tabBalance.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer4.Name = "splitContainer4";
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.btnBalance);
-            this.splitContainer4.Panel1.Controls.Add(this.txtBalPnumber);
-            this.splitContainer4.Panel1.Controls.Add(this.label16);
-            this.splitContainer4.Panel1.Controls.Add(this.txtBalId);
-            this.splitContainer4.Panel1.Controls.Add(this.label19);
-            // 
-            // splitContainer4.Panel2
-            // 
-            this.splitContainer4.Panel2.Controls.Add(this.label20);
-            this.splitContainer4.Panel2.Controls.Add(this.txtBalResponse);
-            this.splitContainer4.Panel2.Cursor = System.Windows.Forms.Cursors.No;
-            this.splitContainer4.Size = new System.Drawing.Size(678, 251);
-            this.splitContainer4.SplitterDistance = 325;
-            this.splitContainer4.TabIndex = 18;
-            // 
-            // btnBalance
-            // 
-            this.btnBalance.Location = new System.Drawing.Point(116, 133);
-            this.btnBalance.Name = "btnBalance";
-            this.btnBalance.Size = new System.Drawing.Size(87, 23);
-            this.btnBalance.TabIndex = 15;
-            this.btnBalance.Text = "Get Balance";
-            this.btnBalance.UseVisualStyleBackColor = true;
-            this.btnBalance.Click += new System.EventHandler(this.btnBalance_Click);
-            // 
-            // txtBalPnumber
-            // 
-            this.txtBalPnumber.Location = new System.Drawing.Point(143, 71);
-            this.txtBalPnumber.Name = "txtBalPnumber";
-            this.txtBalPnumber.Size = new System.Drawing.Size(100, 20);
-            this.txtBalPnumber.TabIndex = 1;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(113, 100);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(19, 13);
-            this.label16.TabIndex = 8;
-            this.label16.Text = "Id:";
-            // 
-            // txtBalId
-            // 
-            this.txtBalId.Location = new System.Drawing.Point(143, 97);
-            this.txtBalId.Name = "txtBalId";
-            this.txtBalId.Size = new System.Drawing.Size(100, 20);
-            this.txtBalId.TabIndex = 2;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(51, 74);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(81, 13);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "Phone Number:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(125, 23);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(97, 13);
-            this.label20.TabIndex = 16;
-            this.label20.Text = "Balance Response";
-            // 
-            // txtBalResponse
-            // 
-            this.txtBalResponse.Location = new System.Drawing.Point(36, 51);
-            this.txtBalResponse.Multiline = true;
-            this.txtBalResponse.Name = "txtBalResponse";
-            this.txtBalResponse.Size = new System.Drawing.Size(280, 151);
-            this.txtBalResponse.TabIndex = 0;
-            // 
-            // splitContainer5
-            // 
-            this.splitContainer5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer5.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer5.Name = "splitContainer5";
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.btnCall);
-            this.splitContainer5.Panel1.Controls.Add(this.label11);
-            this.splitContainer5.Panel1.Controls.Add(this.txtCallFromNumber);
-            this.splitContainer5.Panel1.Controls.Add(this.textBox2);
-            this.splitContainer5.Panel1.Controls.Add(this.txtCallToPhoneNumber);
-            this.splitContainer5.Panel1.Controls.Add(this.label21);
-            this.splitContainer5.Panel1.Controls.Add(this.label22);
-            // 
-            // splitContainer5.Panel2
-            // 
-            this.splitContainer5.Panel2.Controls.Add(this.label23);
-            this.splitContainer5.Panel2.Controls.Add(this.txtCallResponse);
-            this.splitContainer5.Panel2.Cursor = System.Windows.Forms.Cursors.No;
-            this.splitContainer5.Size = new System.Drawing.Size(678, 251);
-            this.splitContainer5.SplitterDistance = 325;
-            this.splitContainer5.TabIndex = 18;
-            // 
-            // btnCall
-            // 
-            this.btnCall.Location = new System.Drawing.Point(113, 135);
-            this.btnCall.Name = "btnCall";
-            this.btnCall.Size = new System.Drawing.Size(87, 23);
-            this.btnCall.TabIndex = 15;
-            this.btnCall.Text = "Call";
-            this.btnCall.UseVisualStyleBackColor = true;
-            this.btnCall.Click += new System.EventHandler(this.btnCall_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(100, 103);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(33, 13);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Date:";
-            // 
-            // txtCallFromNumber
-            // 
-            this.txtCallFromNumber.Location = new System.Drawing.Point(144, 48);
-            this.txtCallFromNumber.Name = "txtCallFromNumber";
-            this.txtCallFromNumber.Size = new System.Drawing.Size(100, 20);
-            this.txtCallFromNumber.TabIndex = 1;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(144, 100);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 5;
-            // 
-            // txtCallToPhoneNumber
-            // 
-            this.txtCallToPhoneNumber.Location = new System.Drawing.Point(144, 74);
-            this.txtCallToPhoneNumber.Name = "txtCallToPhoneNumber";
-            this.txtCallToPhoneNumber.Size = new System.Drawing.Size(100, 20);
-            this.txtCallToPhoneNumber.TabIndex = 3;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(36, 77);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(97, 13);
-            this.label21.TabIndex = 9;
-            this.label21.Text = "To Phone Number:";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(26, 51);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(107, 13);
-            this.label22.TabIndex = 12;
-            this.label22.Text = "From Phone Number:";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(125, 23);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(75, 13);
-            this.label23.TabIndex = 16;
-            this.label23.Text = "Call Response";
-            // 
-            // txtCallResponse
-            // 
-            this.txtCallResponse.Location = new System.Drawing.Point(36, 51);
-            this.txtCallResponse.Multiline = true;
-            this.txtCallResponse.Name = "txtCallResponse";
-            this.txtCallResponse.Size = new System.Drawing.Size(280, 151);
-            this.txtCallResponse.TabIndex = 0;
-            // 
             // Cellphone_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -773,14 +752,6 @@
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.tabCall.ResumeLayout(false);
-            this.tabPrice.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel1.PerformLayout();
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            this.splitContainer3.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
             this.tabBalance.ResumeLayout(false);
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel1.PerformLayout();
@@ -788,12 +759,20 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            this.tabCall.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
             this.splitContainer5.Panel1.PerformLayout();
             this.splitContainer5.Panel2.ResumeLayout(false);
             this.splitContainer5.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
+            this.tabPrice.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel1.PerformLayout();
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -853,9 +832,7 @@
         private System.Windows.Forms.TextBox txtBalResponse;
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.Button btnCall;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtCallFromNumber;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox txtCallToPhoneNumber;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;

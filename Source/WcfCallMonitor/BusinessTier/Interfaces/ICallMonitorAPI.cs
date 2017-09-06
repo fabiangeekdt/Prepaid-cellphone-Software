@@ -26,8 +26,10 @@ namespace BusinessTier.Interfaces
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             UriTemplate = "Register")]
-        string subscribeCustomer(Stream Customer);
+        [return: MessageParameter(Name = "Register_Response")]
+        Stream subscribeCustomer(Stream Customer);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -35,27 +37,34 @@ namespace BusinessTier.Interfaces
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Wrapped,
             UriTemplate = "Recharge")]
-        string rechargePhoneNumber(Stream RechargePhone);
+        [return: MessageParameter(Name = "Recharge_Response")]
+        Stream rechargePhoneNumber(Stream RechargePhone);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             UriTemplate = "/StartPhoneCall")]
-        string startPhoneCall(Stream Start);
+        [return: MessageParameter(Name = "PhoneCall_Response")]
+        Stream startPhoneCall(Stream Start);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             UriTemplate = "GetPhoneBalance")]
-        string getPhoneBalance(Stream CustomerBalance);
+        [return: MessageParameter(Name = "Balance_Response")]
+        Stream getPhoneBalance(Stream CustomerBalance);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedResponse,
             UriTemplate = "getPricePerMinute")]
-        string getPricePerMinute(Stream idprice);
+        [return: MessageParameter(Name = "Price_Response")]
+        Stream getPricePerMinute(Stream idprice);
     }
 }

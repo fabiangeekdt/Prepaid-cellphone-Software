@@ -31,25 +31,30 @@ namespace BusinessTier.Transactions
             resp = new Response();
         }
 
-        public string GetPrice(Stream idPrice)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idPrice"></param>
+        /// <returns></returns>
+        public Stream GetPrice(Stream idPrice)
         {
             try
             {
                 Price price = SerializationHelpers.DeserializeJson<Price>(idPrice);
                 Price p = dataAccess.getPrice(Convert.ToInt32(price.Id));
                 if (p != null)
-                { 
+                {
                     resp.idResponse = 0;
                     resp.response = p.Description + " " + p.Prices.ToString();
                     resp.exception = null;
-                    return SerializationHelpers.SerializeJson(resp);
+                    return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson(resp));
                 }
                 else
                 {
                     resp.idResponse = 1;
                     resp.response = "Id Price does not exist";
                     resp.exception = null;
-                    return SerializationHelpers.SerializeJson(resp);
+                    return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson(resp));
                 }
             }
             catch (Exception ex)
@@ -57,7 +62,7 @@ namespace BusinessTier.Transactions
                 resp.idResponse = 400;
                 resp.response = "";
                 resp.exception = ex;
-                return SerializationHelpers.SerializeJson(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson(resp));
             }
         }
     }

@@ -37,7 +37,7 @@ namespace BusinessTier.Transactions
         /// 
         /// </summary>
         /// <returns></returns>
-        public string subscribe()
+        public Stream subscribe()
         {
             try
             {
@@ -53,14 +53,14 @@ namespace BusinessTier.Transactions
                     resp.response = "Customer: " + cus.FirstName + " " + cus.SecondName + " " + cus.LastName + " not created.";
                     resp.exception = null;
                 }
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
             catch (Exception ex)
             {
                 resp.idResponse = 400;
                 resp.response = "Cannot finalize transaction: subscribe.";
                 resp.exception = ex;
-                return SerializationHelpers.SerializeJson<Response>(resp);
+                return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
     }

@@ -60,7 +60,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(cus);
                 var resp = ResponseCallService(json, "POST", "Register");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+                txtResposeArea.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(r);
                 var resp = ResponseCallService(json, "POST", "Recharge");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtReResponse.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+                txtReResponse.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
             }
             catch (Exception ex)
             {
@@ -88,11 +88,13 @@ namespace CellPhoneSimulator
         {
             try
             {
+                var datacontractserializer = new DataContractJsonSerializer(typeof(Response));
                 Price p = new Price { Id = Convert.ToInt32(cbPrice.SelectedValue), Description = "", Prices = 0 };
                 var json = SerializationHelpers.SerializeJson(p);
                 var resp = ResponseCallService(json, "POST", "getPricePerMinute");
+                //var x = (Response)datacontractserializer.ReadObject(resp);
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtPrResponse.Text = "Price: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+                txtPrResponse.Text = "Price: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
             }
             catch (Exception ex)
             {
@@ -108,7 +110,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(cusp);
                 var resp = ResponseCallService(json, "POST", "GetPhoneBalance");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
             }
             catch (Exception ex)
             {
@@ -124,7 +126,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(call);
                 var resp = ResponseCallService(json, "POST", "StartPhoneCall");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + userinfo.exception.Message;
+                txtCallResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
             }
             catch (Exception ex)
             {
@@ -154,6 +156,26 @@ namespace CellPhoneSimulator
             catch (Exception ex)
             {
                 throw new Exception("Oops... Something went wrong: \nException: " + ex.Message);
+            }
+        }
+
+        public static string StreamToString(Stream flujoDatos)
+        {
+            try
+            {
+                if (flujoDatos == null)
+                    return null;
+
+                if (flujoDatos.CanSeek && flujoDatos.Position != 0)
+                    flujoDatos.Position = 0;
+
+                StreamReader lectorFlujoDatos = new StreamReader(flujoDatos);
+
+                return lectorFlujoDatos.ReadToEnd();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

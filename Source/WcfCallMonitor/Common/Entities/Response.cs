@@ -17,7 +17,7 @@ using System.Runtime.Serialization;
 
 namespace Common.Entities
 {
-    [DataContract]
+    [DataContract(Name = "Response")]
     public class Response
     {
         [DataMember]

@@ -18,6 +18,6 @@ namespace BusinessTier.Interfaces
 {
     public interface ITransactionFactory
     {
-        string getTransaction(string transType, Stream data);
+        Stream getTransaction(string transType, Stream data);
     }
 }

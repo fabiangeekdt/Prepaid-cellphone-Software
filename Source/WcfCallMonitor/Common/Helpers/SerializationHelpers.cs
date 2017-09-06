@@ -45,7 +45,7 @@ namespace Common.Helpers
             }
             catch (Exception ex)
             {
-                throw new HttpException(400, "Bad Request: ", ex);
+                throw new HttpException(400, "Bad Type: ", ex);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Common.Helpers
             }
             catch (Exception ex)
             {
-                throw new HttpException(400, "Bad Request: ", ex);
+                throw new HttpException(400, "Bad Type: ", ex);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Common.Helpers
             }
             catch (Exception ex)
             {
-                throw new HttpException(400, "Bad Request: ", ex);
+                throw new HttpException(400, "Bad Type: ", ex);
             }
         }
 
@@ -117,9 +117,18 @@ namespace Common.Helpers
             }
             catch (Exception ex)
             {
-                throw new HttpException(400, "Bad Request: ", ex);
+                throw new HttpException(400, "Bad Type: ", ex);
             }
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static MemoryStream GenerateStreamFromString(string value)
+        {
+            return new MemoryStream(Encoding.UTF8.GetBytes(value ?? ""));
         }
     }
 }

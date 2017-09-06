@@ -31,27 +31,27 @@ namespace WcfCallMonitor
             transaction = new TransactionFactory();
         }
 
-        public string subscribeCustomer(Stream Customer)
+        public Stream subscribeCustomer(Stream Customer)
         {
             return transaction.getTransaction("subscribeCustomer", Customer);
         }
 
-        public string rechargePhoneNumber(Stream recharge)
+        public Stream rechargePhoneNumber(Stream recharge)
         {
             return transaction.getTransaction("rechargePhoneNumber", recharge);
         }
 
-        public string startPhoneCall(Stream call)
+        public Stream startPhoneCall(Stream call)
         {
             return transaction.getTransaction("startPhoneCall", call);
         }
 
-        public string getPhoneBalance(Stream customer)
+        public Stream getPhoneBalance(Stream customer)
         {
             return transaction.getTransaction("getPhoneBalance", customer);
         }
 
-        public string getPricePerMinute(Stream idPrice)
+        public Stream getPricePerMinute(Stream idPrice)
         {
             return transaction.getTransaction("getPricePerMinute", idPrice);
         }
