@@ -64,7 +64,6 @@ namespace BusinessTier.Transactions
                 call = SerializationHelpers.DeserializeJson<Call>(data);
 
                 cus = dataAccess.getCustomerPerPhone(call.PhoneNumber);
-                transValidations.validateCustomerSubscription(cus);
 
                 cusPhone = dataAccess.getBalance(cus.Id, cus.PhoneNumber);
                 if (cusPhone != null)
@@ -121,7 +120,7 @@ namespace BusinessTier.Transactions
             catch (Exception ex)
             {
                 resp.idResponse = 400;
-                resp.response = "Cannot finalize transaction: PhoneCall";
+                resp.response = "Transaction: PhoneCall; Customer does not Exist.";
                 resp.exception = ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }

@@ -15,11 +15,12 @@
 #endregion
 using Common.Entities;
 using Common.Enum;
+using DataTier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Helpers
+namespace DataTier.Helpers
 {
     public class EntityHelper
     {

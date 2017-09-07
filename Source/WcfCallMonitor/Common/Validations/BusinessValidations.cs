@@ -23,10 +23,10 @@ namespace Common.Validations
         /// <summary>
         /// Validate if an object is null
         /// </summary>
-        public void validateCustomerSubscription(object cus)
+        public void  validateCustomerSubscription(object cus)
         {
             if (cus == null)
-                throw new Exception("Customer is not Subscribed.");
+                throw new Exception("Customer not subscribed");
         }
 
         /// <summary>

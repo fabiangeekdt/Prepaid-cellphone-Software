@@ -16,7 +16,7 @@
 using System;
 using System.Linq;
 using Common.Entities;
-using Common.Helpers;
+using DataTier.Helpers;
 using System.Collections.Generic;
 
 namespace DataTier
@@ -74,7 +74,7 @@ namespace DataTier
                 var dbCtx = new CallMonitorModelEntities();
                 var cus = dbCtx.CUSTOMER.Where(c => c.Id == Id &&
                                                 c.Phone_Number == PhoneNumber).FirstOrDefault();
-                return eHelper.convertToEntity(cus);
+                return (eHelper.convertToEntity(cus) != null) ? eHelper.convertToEntity(cus) : null;
             }
             catch (Exception ex)
             {
@@ -93,7 +93,7 @@ namespace DataTier
             {
                 var dbCtx = new CallMonitorModelEntities();
                 var cus = dbCtx.CUSTOMER.Where(c => c.Phone_Number == PhoneNumber).FirstOrDefault();
-                return eHelper.convertToEntity(cus);
+                return (eHelper.convertToEntity(cus) != null) ? eHelper.convertToEntity(cus) : null;
             }
             catch (Exception ex)
             {

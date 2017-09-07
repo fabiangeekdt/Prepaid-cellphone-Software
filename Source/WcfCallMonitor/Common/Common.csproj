@@ -56,7 +56,6 @@
     <Compile Include="Enum\Period.cs" />
     <Compile Include="Enum\PromotionType.cs" />
     <Compile Include="Enum\RechargeState.cs" />
-    <Compile Include="Helpers\EntityHelper.cs" />
     <Compile Include="Helpers\SerializationHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validations\BusinessValidations.cs" />

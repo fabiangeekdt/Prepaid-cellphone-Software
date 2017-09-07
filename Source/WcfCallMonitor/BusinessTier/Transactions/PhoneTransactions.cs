@@ -65,7 +65,7 @@ namespace BusinessTier.Transactions
                 recharge = SerializationHelpers.DeserializeJson<Recharge>(data);
                 cus = dataAccess.getCustomerPerPhone(recharge.Id, recharge.PhoneNumber);
                 transValidations.validateCustomerSubscription(cus);
-                
+
                 var res = dataAccess.phoneRecharge(recharge); 
                 if (res != 0)
                 {
@@ -92,8 +92,8 @@ namespace BusinessTier.Transactions
             catch (Exception ex)
             {
                 resp.idResponse = 400;
-                resp.response = "Cannot finalize transaction: rechargePhoneNumber, " + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
-                resp.exception = "Customer No Exist: " + ex.Message;
+                resp.response = "Transaction: rechargePhoneNumber; Customer does not Exist. ";
+                resp.exception =  ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }
         }
@@ -138,7 +138,7 @@ namespace BusinessTier.Transactions
                 phoneBalance = SerializationHelpers.DeserializeJson<CustomerPhone>(data);
                 cus = dataAccess.getCustomerPerPhone(phoneBalance.Id, phoneBalance.PhoneNumber);
                 transValidations.validateCustomerSubscription(cus);
-                
+
                 var res = dataAccess.getBalance(phoneBalance.Id, phoneBalance.PhoneNumber);
                 if(res != null)
                 {
@@ -157,7 +157,7 @@ namespace BusinessTier.Transactions
             catch (Exception ex)
             {
                 resp.idResponse = 400;
-                resp.response = "Cannot finalize transaction: getPhoneBalance, " + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
+                resp.response = "Transaction: getPhoneBalance; Customer does not Exist. ";
                 resp.exception = ex.Message;
                 return SerializationHelpers.GenerateStreamFromString(SerializationHelpers.SerializeJson<Response>(resp));
             }

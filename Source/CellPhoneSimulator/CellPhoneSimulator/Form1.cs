@@ -61,7 +61,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(cus);
                 var resp = ResponseCallService(json, "POST", "Register");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtResposeArea.Text = "Id Response: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                txtResposeArea.Text = "Id Response: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception : "");
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(r);
                 var resp = ResponseCallService(json, "POST", "Recharge");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtReResponse.Text = "Id Response: " + userinfo.response + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                txtReResponse.Text = "Id Response: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception : "");
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace CellPhoneSimulator
                 var resp = ResponseCallService(json, "POST", "getPricePerMinute");
                 //var x = (Response)datacontractserializer.ReadObject(resp);
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtPrResponse.Text = "Price: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                txtPrResponse.Text = "Price: " + userinfo.idResponse + "\n Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception : "");
             }
             catch (Exception ex)
             {
@@ -111,7 +111,7 @@ namespace CellPhoneSimulator
                 var json = SerializationHelpers.SerializeJson(cusp);
                 var resp = ResponseCallService(json, "POST", "GetPhoneBalance");
                 var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                txtBalResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception : "");
             }
             catch (Exception ex)
             {
@@ -129,7 +129,7 @@ namespace CellPhoneSimulator
                     var json = SerializationHelpers.SerializeJson(call);
                     var resp = ResponseCallService(json, "POST", "StartPhoneCall");
                     var userinfo = SerializationHelpers.DeserializeJson<Response>(resp);
-                    txtCallResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception.Message : "");
+                    txtCallResponse.Text = "Balance ID Response: " + userinfo.idResponse + "\n Balance Response: " + userinfo.response + "\n Exception: " + ((userinfo.exception != null) ? userinfo.exception : "");
                 }
                 else
                     txtCallResponse.Text = "Origin Phone Number and Destination Phone Number cannot be the same.";

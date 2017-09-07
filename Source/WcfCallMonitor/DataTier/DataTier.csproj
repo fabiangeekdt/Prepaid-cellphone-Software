@@ -79,6 +79,7 @@
       <DependentUpon>CallMonitorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAO.cs" />
+    <Compile Include="Helpers\EntityHelper.cs" />
     <Compile Include="MinimunRechargeEntity.cs">
       <DependentUpon>CallMonitorModel.tt</DependentUpon>
     </Compile>
