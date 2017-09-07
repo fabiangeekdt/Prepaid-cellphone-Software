@@ -16,8 +16,8 @@
 using System;
 using System.Linq;
 using Common.Entities;
+using Common.Helpers;
 using System.Collections.Generic;
-using DataTier.Helpers;
 
 namespace DataTier
 {
